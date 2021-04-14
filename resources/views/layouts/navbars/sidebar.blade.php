@@ -123,13 +123,13 @@
                 <li class="nav-item {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}">
                     <a class="nav-link {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}" href="#raw-submenu" data-toggle="collapse" role="button"
                        aria-expanded="{{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
-                        <i class="ni ni-atom text-green"></i>All Raw Items
+                        <i class="ni ni-atom text-green"></i>Raw Items
                     </a>
                     <div class="collapse {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'show' : 'collapse' }}" id="raw-submenu">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item {{ ((Request::is('raw-item')))? 'active' : '' }}">
                                 <a class="nav-link {{ (Request::is('/raw-item'))? 'active' : '' }}" href="{{ route('raw-item.index') }}">
-                                    {{ __('Raw Items') }}
+                                    {{ __('All Raw Items') }}
                                 </a>
                             </li>
                             <li class="nav-item {{ ((Request::is('raw-item/create')))? 'active' : '' }}">
@@ -163,11 +163,11 @@
                 </li>
 
                 <li class="nav-item {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'active' : '' }}">
-                    <a class="nav-link {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'active' : '' }}" href="#raw-submenu" data-toggle="collapse" role="button"
+                    <a class="nav-link {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'active' : '' }}" href="#raw-entry-submenu" data-toggle="collapse" role="button"
                        aria-expanded="{{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
-                        <i class="ni ni-fat-add text-orange"></i>Raw Entry
+                        <i class="fas fa-asterisk text-green"></i>Raw Entry
                     </a>
-                    <div class="collapse {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'show' : 'collapse' }}" id="raw-submenu">
+                    <div class="collapse {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'show' : 'collapse' }}" id="raw-entry-submenu">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item {{ ((Request::is('raw-entry')))? 'active' : '' }}">
                                 <a class="nav-link {{ (Request::is('/raw-entry'))? 'active' : '' }}" href="{{ route('raw-entry.index') }}">
