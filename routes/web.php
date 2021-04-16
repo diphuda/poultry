@@ -3,19 +3,17 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\RawController;
-use App\Http\Controllers\RawEntryController;
 use App\Http\Controllers\Supervisor\SupervisorDashboardController;
 use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\VendorController;
 use App\Http\Controllers\Warehouse\WarehouseDashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+//Route::get('/', function () {
+//	return view('welcome');
+//});
 Route::get('/', function () {
-	return view('welcome');
-});
-Route::get('/login', function () {
 	return view('auth.login');
 });
 
@@ -52,7 +50,6 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('raw-item', RawController::class);
-	Route::resource('raw-entry', RawEntryController::class);
 //	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
