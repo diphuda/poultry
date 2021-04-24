@@ -47,6 +47,13 @@ class User extends Authenticatable
 	{
 		return $this->belongsTo(Role::class);
 	}
+	
+	public function hasPermission($permission) : bool
+	{
+//		return $this->role->permission()->where('slug', $permission)->first() ? true : false;
+		return (bool)$this->role->permissions()->where('slug', $permission)->first();
+	}
+	
 	public function raws(){
 		return $this->hasMany(Raw::class);
 	}

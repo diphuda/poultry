@@ -26,7 +26,7 @@
                     </div>
                     <!-- card body -->
                     <div class="card-body">
-                        <form action="{{ isset($role) ? route('admin.roles.update', $role->id) : route('admin.roles.store') }}" method="POST">
+                        <form action="{{ isset($role) ? route('roles.update', $role->id) : route('roles.store') }}" method="POST">
                             @csrf
                             @isset($role)
                                 @method('PUT')

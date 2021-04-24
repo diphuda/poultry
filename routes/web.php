@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::get('/', function () {
-//	return view('welcome');
-//});
 Route::get('/', function () {
 	return view('auth.login');
 });
@@ -24,7 +21,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
 	//	Route::get('dashboard', 'SupervisorDashboardController@index')->name('dashboard');
 	Route::get('/dashboard', [DashboardController::class, 'index'])
 		->name('dashboard');
-	Route::resource('roles', RoleController::class);
+	
 });
 
 
@@ -42,15 +39,15 @@ Route::group(['as' => 'warehouse.', 'prefix' => 'warehouse', 'namespace' => 'War
 });
 
 
-
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::resource('roles', RoleController::class);
 	Route::resource('raw-item', RawController::class);
-//	Route::resource('ingredient', ::class);
+	//	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);

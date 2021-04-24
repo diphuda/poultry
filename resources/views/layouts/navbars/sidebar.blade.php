@@ -205,8 +205,8 @@
                     </a>
                 </li>
                 @if(Auth::user()->role->id == 1)
-                    <li class="nav-item {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
-                        <a class="nav-link {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                    <li class="nav-item {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('roles.index') }}">
+                        <a class="nav-link {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="ni ni-tv-2 text-primary"></i> {{ __('Roles') }}
                         </a>
                     </li>

@@ -16,11 +16,10 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">All Raw Items</h3>
+                            <h3 class="mb-0">Roles</h3>
                         </div>
                         <div class="col text-right">
-                            <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary">Add New Raw Item</a>
-                            <a href="add-item.html" class="btn btn-sm btn-success">Add New Raw Entry</a>
+                            <a href="{{ route('roles.create') }}" class="btn btn-sm btn-primary">Add New Role</a>
                         </div>
                     </div>
                 </div>
@@ -49,11 +48,11 @@
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ route('admin.roles.edit', [$role]) }}" class="btn btn-sm btn-info"><i
+                                    <a href="{{ route('roles.edit', [$role]) }}" class="btn btn-sm btn-info"><i
                                             class="fas fa-edit"></i> Edit</a>
 
                                     <form id="delete-{{ $role->id }}"
-                                        action="{{ route('admin.roles.destroy', [$role]) }}"
+                                        action="{{ route('roles.destroy', [$role]) }}"
                                         style="display: inline-block;" method="POST">
                                         @method('DELETE')
                                         @csrf

@@ -6,46 +6,33 @@ use App\Http\Controllers\Controller;
 use App\Models\Module;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Psy\Util\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Role[]|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Database\Eloquent\Collection|\Illuminate\Http\Response
-     */
+    
     public function index()
     {
         // notify("Quick notification");
+	    Gate::authorize('app.roles.index');
         $roles = Role::all();
         return view('admin.roles.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
+   
     public function create()
     {
+	    Gate::authorize('app.roles.create');
         $modules = Module::all();
 
         return view('admin.roles.form', compact('modules'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
     {
-
-
+	    Gate::authorize('app.roles.create');
         $this->validate($request, [
             'name'          => 'required',
             'permissions'   => 'required|array',
@@ -57,61 +44,36 @@ class RoleController extends Controller
             'slug' => str_slug($request->name)
         ])->permissions()->sync($request->input('permissions', []));
 
-        return redirect()->route('admin.roles.index')->with('success', 'Role Created Successfully');
+        return redirect()->route('roles.index')->with('success', 'Role Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Role $role
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function show(Role $role)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Role $role
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
-     */
     public function edit(Role $role)
     {
+	    Gate::authorize('app.roles.edit');
         $modules = Module::all();
         return view('admin.roles.form', compact('modules', 'role'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Role $role
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function update(Request $request, Role $role)
     {
+	    Gate::authorize('app.roles.create');
         $role->update([
             'name' => $request->name,
             'slug' => str_slug($request->name)
         ]);
-        $role->permissions()->sync($request->input('permissions', []));
-        return redirect()->route('admin.roles.index')->with('success', 'Role Updated Successfully');
+        $role->permissions()->sync($request->input('permissions'));
+        return redirect()->route('roles.index')->with('success', 'Role Updated Successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Role $role
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function destroy(Role $role)
     {
+	    Gate::authorize('app.roles.destroy');
         $role->delete();
         return back();
     }
