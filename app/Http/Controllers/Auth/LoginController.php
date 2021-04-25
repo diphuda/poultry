@@ -13,11 +13,6 @@ class LoginController extends Controller
 	|--------------------------------------------------------------------------
 	| Login Controller
 	|--------------------------------------------------------------------------
-	|
-	| This controller handles authenticating users for the application and
-	| redirecting them to your home screen. The controller uses a trait
-	| to conveniently provide its functionality to your applications.
-	|
 	*/
 	
 	use AuthenticatesUsers;
@@ -32,8 +27,6 @@ class LoginController extends Controller
 	
 	/**
 	 * Create a new controller instance.
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function __construct()
 	{
@@ -45,14 +38,5 @@ class LoginController extends Controller
 			return redirect()->route('warehouse.dashboard');
 		}
 		$this->middleware('guest')->except('logout');
-		
-//		if (Auth::check() && Auth::user()->role->id == 1) {
-//			$this->redirectTo = route('admin.dashboard');
-//		} elseif (Auth::check() && Auth::user()->role->id == 2) {
-//			$this->redirectTo = route('supervisor.dashboard');
-//		} elseif (Auth::check() && Auth::user()->role->id == 3) {
-//			$this->redirectTo = route('warehouse.dashboard');
-//		}
-//		$this->middleware('guest')->except('logout');
 	}
 }

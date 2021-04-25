@@ -62,11 +62,11 @@
 
                                         @if((Auth::user()->role->id == 1))
 
-                                            <form action="{{ route('raw-item.destroy', [$item]) }}" style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
+                                            <form id="delete-form-{{$item->id}}" action="{{ route('raw-item.destroy', [$item]) }}" style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
                                                   title="Delete">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <button type="button" onclick="deleteData({{$item->id}})" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                             </form>
                                         @endif
                                     </td>

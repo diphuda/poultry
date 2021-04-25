@@ -10,8 +10,6 @@ class RawController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
 	 */
 	public function index()
 	{
@@ -22,8 +20,6 @@ class RawController extends Controller
 	
 	/**
 	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
 	 */
 	public function create()
 	{
@@ -32,10 +28,6 @@ class RawController extends Controller
 	
 	/**
 	 * Store a newly created resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function store(Request $request)
 	{
@@ -57,10 +49,6 @@ class RawController extends Controller
 	
 	/**
 	 * Display the specified resource.
-	 *
-	 * @param int $id
-	 *
-	 * @return \Illuminate\Http\Response
 	 */
 	public function show($id)
 	{
@@ -69,10 +57,6 @@ class RawController extends Controller
 	
 	/**
 	 * Show the form for editing the specified resource.
-	 *
-	 * @param int $id
-	 *
-	 * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
 	 */
 	public function edit($id)
 	{
@@ -82,11 +66,6 @@ class RawController extends Controller
 	
 	/**
 	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param int $id
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function update(Request $request, $id)
 	{
@@ -102,18 +81,11 @@ class RawController extends Controller
 	
 	/**
 	 * Remove the specified resource from storage.
-	 *
-	 * @param int $id
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function destroy($id)
 	{
 		// example:
-		alert()->success('Deleted','Raw Item Deleted Successfully.')->showConfirmButton('Confirm', '#3085d6');
-//		alert()->question('Are you sure?','You won\'t be able to revert this!')
-//			->showConfirmButton('Yes! Delete it', '#3085d6')
-//			->showCancelButton('Cancel', '#aaa')->reverseButtons();
+		alert()->success('Deleted','Raw Item Deleted Successfully.')->showConfirmButton('OK', '#3085d6');
 		$item = Raw::findOrFail($id);
 		$item->delete();
 		return redirect()->route('raw-item.index');

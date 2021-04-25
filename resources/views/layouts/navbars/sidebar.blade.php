@@ -100,7 +100,7 @@
             {{--            @endif--}}
             <ul class="navbar-nav">
                 @if(Auth::user()->role->id == 1)
-                    <li class="nav-item active">
+                    <li class="nav-item {{ (Request::is('admin/dashboard'))? 'active' : '' }}">
                         <a class="nav-link {{ (Request::is('admin/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                             <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
                         </a>
@@ -142,11 +142,11 @@
                 </li>
 
                 <li class="nav-item {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}">
-                    <a class="nav-link {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}" href="#raw-submenu" data-toggle="collapse" role="button"
+                    <a class="nav-link {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}" href="#vendor" data-toggle="collapse" role="button"
                        aria-expanded="{{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
                         <i class="ni ni-circle-08 text-orange"></i>Vendors
                     </a>
-                    <div class="collapse {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'show' : 'collapse' }}" id="raw-submenu">
+                    <div class="collapse {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'show' : 'collapse' }}" id="vendor">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item {{ ((Request::is('supplier')))? 'active' : '' }}">
                                 <a class="nav-link {{ (Request::is('/supplier'))? 'active' : '' }}" href="{{ route('supplier.index') }}">
@@ -205,12 +205,17 @@
                     </a>
                 </li>
                 @if(Auth::user()->role->id == 1)
-                    <li class="nav-item {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('roles.index') }}">
-                        <a class="nav-link {{ (Request::is('admin/roles'))? 'active' : '' }}" href="{{ route('roles.index') }}">
-                            <i class="ni ni-tv-2 text-primary"></i> {{ __('Roles') }}
+                    <li class="nav-item {{ (request()->is('roles*'))? 'active' : '' }}">
+                        <a class="nav-link {{ (request()->is('roles*'))? 'active' : '' }}" href="{{ route('roles.index') }}">
+                            <i class="ni ni-ui-04 text-orange"></i> {{ __('Roles & Permissions   ') }}
                         </a>
                     </li>
                 @endif
+                <li class="nav-item {{ (request()->is('users*')) ? 'active' : '' }}">
+                    <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="{{ route('users.index') }}">
+                        <i class="fas fa-users-cog text-success"></i></i> {{ __('User Management') }}
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-button-power text-gray"></i> Logout
