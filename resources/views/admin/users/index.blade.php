@@ -10,7 +10,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
 </div>
 <div class="container-fluid mt--9">
-    <div class="row mt-5">
+    <div class="row mt-5 justify-content-md-center">
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-header border-0">

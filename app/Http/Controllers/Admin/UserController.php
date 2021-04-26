@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -24,7 +25,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('app.users.create');
+        $roles = Role::all();
+        return view('admin.users.form', compact('roles'));
     }
 
     /**

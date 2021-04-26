@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Role Management')
+@push('css')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
+
+@section('title', 'User Management')
 
 @section('content')
     <!-- Header -->
@@ -19,18 +23,23 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Role Management</h3>
-                                <small>Control access for different roles</small>
+
+                                @if(isset($user))
+                                    <h3 class="mb-0">Edit User</h3>
+                                @else
+                                    <h3 class="mb-0">Create User</h3>
+                                @endif
                             </div>
                         </div>
                     </div>
                     <!-- card body -->
                     <div class="card-body">
-                        <form action="{{ isset($role) ? route('roles.update', $role->id) : route('roles.store') }}" method="POST">
+                        <form action="{{ isset($role) ? route('users.update', $role->id) : route('users.store') }}" method="POST">
                             @csrf
-                            @isset($role)
+                            @isset($user)
                                 @method('PUT')
                             @endisset
+
                             <div class="">
                                 <div class="form-group">
                                     <label class="form-control-label" for="name">Name</label>
@@ -38,7 +47,7 @@
                                            class="form-control @error('name') is-invalid @enderror"
                                            id="name"
                                            name="name" required
-                                           value="{{ $role->name ?? old('name') }}"
+                                           value="{{ $user->name ?? old('name') }}"
                                     >
                                     @error('name')
                                     <div class="invalid-feedback" role="alert">
@@ -47,41 +56,69 @@
                                     @enderror
                                 </div>
 
-                                <h3 class="text-center">Manage Permissions for this role</h3>
-                                @error('permissions')
-                                <div class="text-center badge-danger" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-
-                                @forelse($modules->chunk(1) as $key=>$chunks)
-                                    @foreach($chunks as $key=>$module)
-                                        <h5>Module Name: {{ $module->name }}</h5>
-                                        @foreach($module->permissions as $key=>$permission)
-                                            <div class="mb-3 ml-4">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" id="permission-{{ $permission->id }}" name="permissions[]" value="{{ $permission->id }}"
-                                                           value="{{ $role->name ?? old('name') }}"
-                                                    @isset($role)
-                                                        @foreach($role->permissions as $rPermission)
-                                                            {{ $permission->id ==  $rPermission->id ? 'checked' : ''}}
-                                                                @endforeach
-                                                            @endisset
-                                                    >
-                                                    <label class="custom-control-label" for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endforeach
-
-
-                                @empty
-                                    <div class="row">
-                                        <div class="col text-center text-danger">Nothing Found</div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="email">Email</label>
+                                    <input type="email"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           id="email"
+                                           name="email" required
+                                           value="{{ $user->email ?? old('email') }}"
+                                    >
+                                    @error('email')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
                                     </div>
-                                @endforelse
+                                    @enderror
+                                </div>
 
-                                @isset($role)
+                                <div class="form-group">
+                                    <label class="form-control-label" for="password">Password</label>
+                                    <input type="password"
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           id="password"
+                                           name="password" required
+                                           value=""
+                                    >
+                                    @error('password')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="confirm_password">Confirm Password</label>
+                                    <input type="password"
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           id="confirm_password"
+                                           name="password_confirmation" required
+                                           value=""
+                                    >
+                                    @error('password')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-control-label" for="role">Role </label>
+                                    <select class="form-control js-example-basic-single @error('role') is-invalid @enderror" data-toggle="select" name="role" required>
+                                        <option value="" selected disabled>--- Select a Role ---</option>
+                                        @foreach($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+
+                                    </select>
+
+                                    @error('role')
+                                    <div class="invalid-feedback" role="alert">
+                                        This field is required
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                @isset($user)
                                     <button class="btn btn-icon btn-success float-right" type="submit">
                                         <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
                                         <span class="btn-inner--text">Update</span>
@@ -89,7 +126,7 @@
                                 @else
                                     <button class="btn btn-icon btn-success float-right" type="submit">
                                         <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                        <span class="btn-inner--text">Add Role</span>
+                                        <span class="btn-inner--text">Add User</span>
                                     </button>
                                 @endisset
                             </div>
@@ -107,5 +144,12 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // In your Javascript (external .js resource or <script> tag)
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 
 @endpush
