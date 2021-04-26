@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 @endpush
 
 @section('title', 'User Management')
@@ -34,7 +34,7 @@
                     </div>
                     <!-- card body -->
                     <div class="card-body">
-                        <form action="{{ isset($role) ? route('users.update', $role->id) : route('users.store') }}" method="POST">
+                        <form action="{{ isset($user) ? route('users.update', $user->id) : route('users.store') }}" method="POST">
                             @csrf
                             @isset($user)
                                 @method('PUT')
@@ -46,7 +46,7 @@
                                     <input type="text"
                                            class="form-control @error('name') is-invalid @enderror"
                                            id="name"
-                                           name="name" required
+                                           name="name" {{ !isset($user) ? 'required' : '' }}
                                            value="{{ $user->name ?? old('name') }}"
                                     >
                                     @error('name')
@@ -61,7 +61,8 @@
                                     <input type="email"
                                            class="form-control @error('email') is-invalid @enderror"
                                            id="email"
-                                           name="email" required
+                                           name="email"
+                                           {{ !isset($user) ? 'required' : '' }}
                                            value="{{ $user->email ?? old('email') }}"
                                     >
                                     @error('email')
@@ -76,7 +77,8 @@
                                     <input type="password"
                                            class="form-control @error('password') is-invalid @enderror"
                                            id="password"
-                                           name="password" required
+                                           name="password"
+                                           {{ !isset($user) ? 'required' : '' }}
                                            value=""
                                     >
                                     @error('password')
@@ -91,7 +93,8 @@
                                     <input type="password"
                                            class="form-control @error('password') is-invalid @enderror"
                                            id="confirm_password"
-                                           name="password_confirmation" required
+                                           name="password_confirmation"
+                                           {{ !isset($user) ? 'required' : '' }}
                                            value=""
                                     >
                                     @error('password')
@@ -103,10 +106,18 @@
 
                                 <div class="form-group">
                                     <label class="form-control-label" for="role">Role </label>
-                                    <select class="form-control js-example-basic-single @error('role') is-invalid @enderror" data-toggle="select" name="role" required>
+                                    <select class="form-control js-example-basic-single @error('role') is-invalid @enderror" data-toggle="select" name="role"
+                                            {{ !isset($user) ? 'required' : '' }}
+                                    >
                                         <option value="" selected disabled>--- Select a Role ---</option>
                                         @foreach($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}"
+                                                @isset($user)
+                                                    {{ $user->role->id == $role->id ? 'selected' : '' }}
+                                                @endisset
+                                            >
+                                                {{ $role->name }}
+                                            </option>
                                         @endforeach
 
                                     </select>
@@ -147,7 +158,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('.js-example-basic-single').select2();
         });
     </script>
