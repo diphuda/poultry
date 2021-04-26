@@ -80,7 +80,7 @@ class UserController extends Controller
 		Gate::authorize('app.users.edit');
 		$this->validate($request, [
 			'name'     => 'required|string|max:255',
-			'email'    => 'required|email|max:255',
+			'email'    => 'required|email|max:255|unique:users,email,'. $user->id,
 			'password' => 'nullable|confirmed|min:6',
 			'role'     => 'required',
 		]);
