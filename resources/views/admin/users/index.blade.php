@@ -48,7 +48,7 @@
                                             class="fas fa-edit"></i> Edit</a>
 
                                     <form id="delete-form-{{ $user->id }}"
-                                        action="{{ route('roles.destroy', [$user]) }}"
+                                        action="{{ route('users.destroy', [$user]) }}"
                                         style="display: inline-block;" method="POST">
                                         @method('DELETE')
                                         @csrf

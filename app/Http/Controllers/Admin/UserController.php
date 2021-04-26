@@ -64,6 +64,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        Gate::authorize('app.users.destroy');
+        $user->delete();
+	    toast('User Deleted','success');
+	    return back();
     }
 }
