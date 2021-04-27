@@ -21,7 +21,7 @@ class CreateIngredientsTable extends Migration
             $table->float('amount');
             $table->string('file');
             $table->string('qc_report');
-            $table->boolean('is_approved');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

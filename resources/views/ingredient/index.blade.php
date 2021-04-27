@@ -19,8 +19,8 @@
                                 <h3 class="mb-0">All Raw Entries</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary">Add New Raw Item</a>
-                                <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success">Add New Raw Entry</a>
+                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Add New Raw Item</a>
+                                <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i class="fas fa-asterisk"></i> Add New Entry</a>
                             </div>
                         </div>
                     </div>
@@ -35,6 +35,7 @@
                                 <th scope="col" class="text-center">Unit (kg/ltr)</th>
                                 <th scope="col" class="text-center">Unit Price(tk)</th>
                                 <th scope="col" class="text-center">Cost(tk)</th>
+                                <th scope="col" class="text-center">Approved</th>
                                 <th scope="col" class="text-center">Date</th>
                                 <th scope="col" class="text-center">Actions</th>
                             </tr>
@@ -62,22 +63,32 @@
                                         {{ $ingredient->unit_price * $ingredient->amount }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->created_at->format('M d, Y') }}
+                                        @if($ingredient->is_approved)
+                                            <span class="badge badge-pill badge-success">Yes</span>
+                                        @else
+                                            <span class="badge badge-pill badge-warning">No</span>
+                                        @endif
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye"></i> View</a>
+                                        {{ $ingredient->created_at->format('d M Y') }}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="View Detail" style="margin-right: 0"></i></a>
                                         <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-outline-info"><i
-                                                    class="fas fa-edit"></i> Edit</a>
+                                                    class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
 
-                                        <form id="delete-form-{{ $ingredient->id }}"
-                                              action="{{ route('ingredient.destroy', [$ingredient]) }}"
-                                              style="display: inline-block;" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                            <button type="button" class="btn btn-sm btn-outline-danger"
-                                                    onclick="deleteData({{$ingredient->id}})"><i class="fas fa-trash"></i>
-                                                Remove</button>
-                                        </form>
+                                        @if((Auth::user()->role->id == 1))
+                                            <form id="delete-form-{{ $ingredient->id }}"
+                                                  action="{{ route('ingredient.destroy', [$ingredient]) }}"
+                                                  style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
+                                                  title="Delete">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        onclick="deleteData({{$ingredient->id}})"><i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -19,8 +19,8 @@
                                 <h3 class="mb-0">All Raw Items</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary">Add New Raw Item</a>
-                                <a href="add-item.html" class="btn btn-sm btn-success">Add New Raw Entry</a>
+                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Add New Raw Item</a>
+                                <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i class="fas fa-asterisk"></i> Add New Entry</a>
                             </div>
                         </div>
                     </div>
@@ -51,22 +51,20 @@
                                         {{ $item->amount ? $item->amount : "0"}}
                                     </td>
                                     <td class="text-center">
-                                        {{ $item->cost ? $item->cost :"0" }}
+
                                     </td>
                                     <td class="text-center">
                                         {{ $item->amount ?  $item->cost/$item->amount : "0" }} BDT per KG
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('raw-item.edit', [$item]) }}" class="btn btn-sm btn-success"><i class="ni ni-active-40" data-toggle="tooltip" data-placement="top"
-                                                                                                                          title="Edit"></i></a>
+                                        <a href="{{ route('raw-item.edit', [$item]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
 
                                         @if((Auth::user()->role->id == 1))
-
                                             <form id="delete-form-{{$item->id}}" action="{{ route('raw-item.destroy', [$item]) }}" style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
                                                   title="Delete">
                                                 @method('DELETE')
                                                 @csrf
-                                                <button type="button" onclick="deleteData({{$item->id}})" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                                <button type="button" onclick="deleteData({{$item->id}})" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                             </form>
                                         @endif
                                     </td>

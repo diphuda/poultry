@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use App\Models\Raw;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -14,8 +15,9 @@ class RawController extends Controller
 	public function index()
 	{
 		$item = Raw::all();
+		$ingredients = Ingredient::all();
 		
-		return view('raw.index', ['item' => $item]);
+		return view('raw.index', ['item' => $item, 'ingredients' => $ingredients]);
 	}
 	
 	/**
