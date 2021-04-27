@@ -58,8 +58,8 @@ class User extends Authenticatable
 		return $this->hasMany(Raw::class);
 	}
 	
-	public function rawentries()
+	public function ingredients()
 	{
-		return $this->hasMany(RawEntry::class);
+		return $this->hasMany(Ingredient::class);
 	}
 }

@@ -143,7 +143,7 @@
 
                 <li class="nav-item {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}">
                     <a class="nav-link {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}" href="#vendor" data-toggle="collapse" role="button"
-                       aria-expanded="{{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
+                       aria-expanded="{{ ((Request::is('supplier')) || (Request::is('supplier/create'))) ? 'true' : 'false' }}" aria-controls="raw-submenu">
                         <i class="ni ni-circle-08 text-orange"></i>Vendors
                     </a>
                     <div class="collapse {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'show' : 'collapse' }}" id="vendor">
@@ -162,26 +162,26 @@
                     </div>
                 </li>
 
-{{--                <li class="nav-item {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'active' : '' }}">--}}
-{{--                    <a class="nav-link {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'active' : '' }}" href="#raw-entry-submenu" data-toggle="collapse" role="button"--}}
-{{--                       aria-expanded="{{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">--}}
-{{--                        <i class="fas fa-asterisk text-green"></i>Raw Entry--}}
-{{--                    </a>--}}
-{{--                    <div class="collapse {{ ((Request::is('raw-entry')) || (Request::is('raw-entry/create')))? 'show' : 'collapse' }}" id="raw-entry-submenu">--}}
-{{--                        <ul class="nav nav-sm flex-column">--}}
-{{--                            <li class="nav-item {{ ((Request::is('raw-entry')))? 'active' : '' }}">--}}
-{{--                                <a class="nav-link {{ (Request::is('/raw-entry'))? 'active' : '' }}" href="{{ route('raw-entry.index') }}">--}}
-{{--                                    {{ __('All Entries') }}--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item {{ ((Request::is('raw-entry/create')))? 'active' : '' }}">--}}
-{{--                                <a class="nav-link {{ (Request::is('/raw-entry/create'))? 'active' : '' }}" href="{{ route('raw-entry.create') }}">--}}
-{{--                                    {{ __('Add Entry') }}--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </li>--}}
+                <li class="nav-item {{ (request()->is('ingredient*')) ? 'active' : '' }}">
+                    <a class="nav-link {{ (request()->is('ingredient*')) ? 'active' : '' }}" href="#ingredient-submenu" data-toggle="collapse" role="button"
+                       aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="ingredient-submenu">
+                        <i class="fas fa-asterisk text-green"></i>Raw Entry
+                    </a>
+                    <div class="collapse {{ (request()->is('ingredient*')) ? 'show' : 'collapse' }}" id="ingredient-submenu">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item {{ (request()->is('ingredient')) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('ingredient.index') }}">
+                                    {{ __('All Entries') }}
+                                </a>
+                            </li>
+                            <li class="nav-item {{ (request()->is('ingredient/create')) ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('ingredient.create') }}">
+                                    {{ __('Add Entry') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
 
                 <li class="nav-item">

@@ -44,7 +44,7 @@
                                     {{ $user->role->name }}
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ route('users.edit', [$user]) }}" class="btn btn-sm btn-info"><i
+                                    <a href="{{ route('users.edit', [$user]) }}" class="btn btn-sm btn-outline-info"><i
                                             class="fas fa-edit"></i> Edit</a>
 
                                     <form id="delete-form-{{ $user->id }}"
@@ -52,7 +52,7 @@
                                         style="display: inline-block;" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <button type="button" class="btn btn-sm btn-danger"
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
                                             onclick="deleteData({{$user->id}})"><i class="fas fa-trash"></i>
                                             Remove</button>
                                     </form>

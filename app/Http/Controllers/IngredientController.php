@@ -9,7 +9,8 @@ class IngredientController extends Controller
 {
     public function index()
     {
-        //
+        $ingredients = Ingredient::all();
+        return view('ingredient.index', compact('ingredients'));
     }
 
     public function create()
@@ -40,6 +41,8 @@ class IngredientController extends Controller
 
     public function destroy(Ingredient $ingredient)
     {
-        //
+        $ingredient->delete();
+	    toast('Entry Deleted', 'success');
+	    return back();
     }
 }

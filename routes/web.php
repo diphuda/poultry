@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RawController;
 use App\Http\Controllers\Supervisor\SupervisorDashboardController;
 use App\Http\Controllers\SupplierController;
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('roles', RoleController::class);
 	Route::resource('users', UserController::class);
 	Route::resource('raw-item', RawController::class);
+	Route::resource('ingredient', IngredientController::class);
 	//	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
