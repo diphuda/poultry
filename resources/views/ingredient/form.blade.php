@@ -6,7 +6,11 @@
 
 @endpush
 
-@section('title', 'New Entry')
+@if(isset($ingredient))
+    @section('title', 'Edit Entry')
+@else
+    @section('title', 'New Entry')
+@endif
 
 @section('content')
     <!-- Header -->

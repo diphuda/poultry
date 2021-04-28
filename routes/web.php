@@ -51,6 +51,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('users', UserController::class);
 	Route::resource('raw-item', RawController::class);
 	Route::resource('ingredient', IngredientController::class);
+	Route::get('ingredient/pending', [IngredientController::class, 'pending'])->name('ingredient.pending');
+	Route::put('ingredient/{id}/approve', [IngredientController::class, 'approve'])->name('ingredient.approve');
+	
 	//	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);

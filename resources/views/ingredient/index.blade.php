@@ -3,7 +3,10 @@
 @section('title', 'All Ingredients')
 
 @push('css')
-
+    <!--Datatable CSS-->
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endpush
 
 @section('content')
@@ -24,9 +27,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive py-4">
                         <!-- Projects table -->
-                        <table class="table align-items-center table-flush">
+                        <table class="table table-flush" id="datatable-buttons">
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
@@ -44,10 +47,10 @@
 
                             @foreach($ingredients as $key=>$ingredient)
                                 <tr>
-                                    <th scope="row">
+                                    <th>
                                         {{ $key+1 }}
                                     </th>
-                                    <th scope="row">
+                                    <th>
                                         {{ $ingredient->raw->name }}
                                     </th>
                                     <td class="text-center">
@@ -73,7 +76,8 @@
                                         {{ $ingredient->created_at->format('d M Y') }}
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" data-toggle="tooltip" data-placement="top" title="View Detail" style="margin-right: 0"></i></a>
+                                        <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" data-toggle="tooltip" data-placement="top"
+                                                                                                                                          title="View Detail" style="margin-right: 0"></i></a>
                                         <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-outline-info"><i
                                                     class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
 
@@ -108,5 +112,25 @@
 @endsection
 
 @push('scripts')
+    <!--Datatables-->
+    <script src="{{ asset('assets/vendor/js-cookie/js.cookie.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/lavalamp/js/jquery.lavalamp.min.js') }}"></script>
+    <!-- Optional JS -->
+    <script src="{{ asset('assets/vendor/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable-buttons').DataTable();
+        } );
+    </script>
+
 
 @endpush
