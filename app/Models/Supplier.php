@@ -11,7 +11,8 @@ class Supplier extends Model
 	
 	protected $guarded = ['id'];
 	
-	public function rawEntries(){
-		return $this->hasMany(RawEntry::class);
+	public function ingredients()
+	{
+		return $this->hasMany(Ingredient::class);
 	}
 }

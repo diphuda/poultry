@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Raw extends Model
 {
-	protected $guarded = ['id'];
+    protected $guarded = ['id'];
     use HasFactory;
-    
-    public function rawEntries(){
-    	$this->hasMany(RawEntry::class);
+
+    public function ingredients()
+    {
+        return $this->hasMany(Ingredient::class);
     }
-    public function user(){
-    	$this->belongsTo(\App\User::class);
+
+    public function user()
+    {
+        $this->belongsTo(\App\User::class);
     }
 }
