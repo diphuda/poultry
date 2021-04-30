@@ -57,10 +57,11 @@
                                         {{ $ingredient->supplier->name }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->unit_price }}
+
+                                        {{ $ingredient->amount }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->amount }}
+                                        {{ $ingredient->unit_price }}
                                     </td>
                                     <td class="text-center">
                                         {{ $ingredient->unit_price * $ingredient->amount }}

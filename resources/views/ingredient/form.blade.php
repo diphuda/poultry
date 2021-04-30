@@ -133,7 +133,7 @@
                                                class="form-control @error('unit_price') is-invalid @enderror"
                                                id="unit_price"
                                                name="unit_price" {{ !isset($ingredient) ? 'required' : '' }}
-                                               value="{{ $ingredient->amount ?? old('amount') }}"
+                                               value="{{ $ingredient->unit_price ?? old('unit_price') }}"
                                         >
                                         @error('unit_price')
                                         <div class="invalid-feedback" role="alert">

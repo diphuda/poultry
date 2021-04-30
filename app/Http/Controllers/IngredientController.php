@@ -77,6 +77,13 @@ class IngredientController extends Controller
 			'qc_report'  => 'string',
 		]);
 		
+		//get current amount and cost from raws table
+		$currentAmount = $ingredient->raw->amount;
+		$currentCost = $ingredient->raw->cost;
+		
+		$oldAmount = $ingredient->amount;
+		$oldCost = $ingredient->amount * $ingredient->unit_price;
+		
 		$ingredient->update([
 			'raw_id'      => $request->raw,
 			'supplier_id' => $request->supplier,
@@ -87,6 +94,21 @@ class IngredientController extends Controller
 			'file'        => $request->file,
 			'qc_report'   => $request->qc_report,
 		]);
+		
+		$currentRawItem = $ingredient->raw;
+		
+		$newAmount = $request->amount;
+		$newCost = $newAmount * $request->unit_price;
+
+		$finalAmount = ($currentAmount - $oldAmount) + $newAmount;
+		$finalCost = ($currentCost - $oldCost) + $newCost;
+
+		// updating the table
+		$currentRawItem->update([
+			'amount' => $finalAmount,
+			'cost' => $finalCost
+		]);
+	
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
 		}
