@@ -31,7 +31,7 @@ class IngredientController extends Controller
 			'unit'       => 'required',
 			'unit_price' => 'required',
 			'amount'     => 'required',
-			'file'       => 'nullable|image',
+			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
 			'qc_report'  => 'string',
 		]);
 		
@@ -45,11 +45,12 @@ class IngredientController extends Controller
 			'file'        => $request->file,
 			'qc_report'   => $request->qc_report,
 		]);
+
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
 		}
-		alert()->success('Done!', 'Entry Added successfully');
 		
+		alert()->success('Done!', 'Entry Added successfully');
 		return redirect()->route('ingredient.index');
 	}
 	
@@ -72,7 +73,7 @@ class IngredientController extends Controller
 			'unit'       => 'required',
 			'unit_price' => 'required',
 			'amount'     => 'required',
-			'file'       => 'nullable|image',
+			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
 			'qc_report'  => 'string',
 		]);
 		
@@ -94,9 +95,28 @@ class IngredientController extends Controller
 		return redirect()->route('ingredient.index');
 	}
 	
+	//approve
 	public function approve(Ingredient $id)
 	{
-		$ingredient = Ingredient::find($id);
+
+		$currentRawItem = Raw::find($id->raw_id);
+		$currentRawAmount = $currentRawItem->amount; // getting the existing amount from the table
+		
+		
+		$newRawAmount = $id->amount;
+		$amountToShow = $currentRawAmount + $newRawAmount; // total amount to be added to the table
+		
+		$currentCost = $currentRawItem->cost; // getting the existing cost from the table
+		
+		$newCost = $id->amount * $id->unit_price; // calculating the total cost
+		
+		$costToShow = $currentCost + $newCost; // total cost to be added to the table
+		
+		// updating the table
+		$currentRawItem->update([
+			'amount' => $amountToShow,
+			'cost' => $costToShow
+		]);
 		if (!$id->is_approved) {
 			$id->is_approved = true;
 			$id->save();

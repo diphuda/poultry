@@ -43,8 +43,8 @@
                                     <input type="text" class="form-control" id="item_code" name="item_code" placeholder="Code of the item" required value="{{ old('item_code', $item->item_code) }}">
                                 </div>
                                 <button class="btn btn-icon btn-success float-right" type="submit">
-                                    <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                    <span class="btn-inner--text">Add New Item</span>
+                                    <span class="btn-inner--icon"><i class="fas fa-check"></i></span>
+                                    <span class="btn-inner--text">Update</span>
                                 </button>
                             </div>
                         </form>

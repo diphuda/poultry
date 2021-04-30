@@ -19,7 +19,7 @@ class CreateIngredientsTable extends Migration
             $table->string('unit');
             $table->float('unit_price');
             $table->float('amount');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('qc_report');
             $table->boolean('is_approved')->default(false);
             $table->timestamps();

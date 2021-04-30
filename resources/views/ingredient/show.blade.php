@@ -16,10 +16,13 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Entry ID: {{ $ingredient->id }}</h3>
-                                @if($ingredient->is_approved)
-                                    <h6><span class="badge badge-pill badge-success"><i class="fas fa-check"></i> Approved</span></h6>
-                                @endif
+                                <h2 class="mb-0">Entry ID: {{ $ingredient->id }}
+                                    @if($ingredient->is_approved)
+                                        <span class="badge badge-circle badge-success"><i class="fas fa-check"></i></span>
+                                    @else
+                                        <span class="badge badge-circle badge-danger"><i class="fas fa-times"></i></span>
+                                    @endif
+                                </h2>
                             </div>
                             <div class="col text-right">
                                 <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-info"><i
@@ -47,7 +50,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Unit Price</th>
-                                    <td>{{ $ingredient->unit_price }}/- BDT</td>
+                                    <td>৳ {{ $ingredient->unit_price }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Amount</th>
@@ -55,7 +58,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Total Cost</th>
-                                    <td>BDT {{ $ingredient->amount * $ingredient->unit_price }}/-</td>
+                                    <td>৳ {{ $ingredient->amount * $ingredient->unit_price }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">QC Report</th>
@@ -63,9 +66,13 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Receipt</th>
-                                    <td><a href="{{ $ingredient->getFirstMediaUrl('file') }}" target="_blank"><img src="{{ $ingredient->getFirstMediaUrl('file') }}" alt="" class="img-thumbnail"></a>
+                                    {{--                                    <td><img type="file" src="{{ $ingredient->getFirstMediaUrl('file') }}" alt="" class="img-thumbnail">--}}
+                                    {{--                                        <a href="{{ $ingredient->getFirstMediaUrl('file') }}" class="btn btn-block btn-primary" target="_blank"><i class="fa fa-eye"></i> View</a>--}}
+                                    {{--                                    </td>--}}
+                                    <td>
+                                        {{--                                        <i class="far fa-file text-center text-lg-center"></i>--}}
+                                        <a href="{{ $ingredient->getFirstMediaUrl('file') }}" class="btn btn-sm btn-primary text-center" target="_blank"><i class="fas fa-eye"></i> View</a>
                                     </td>
-                                    {{--                                        <td><img src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" alt="" class="img-fluid img-thumbnail"></td>--}}
                                 </tr>
                                 <tr>
                                     <th scope="row">Approval Status</th>
@@ -103,9 +110,7 @@
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Vendor Detail
-
-                                </h3>
+                                <h3 class="mb-0">Vendor Detail</h3>
                             </div>
                         </div>
                     </div>
@@ -116,7 +121,7 @@
                                 <tbody>
                                 <tr>
                                     <th scope="row">Name</th>
-                                    <td>{{ $ingredient->supplier->name }}</td>
+                                    <td><a href="#">{{ $ingredient->supplier->name }}</a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Address</th>

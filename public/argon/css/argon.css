@@ -19216,8 +19216,8 @@ textarea[resize='horizontal']
 .navbar-vertical .navbar-nav .nav-link.active
 {
     position: relative;
-    margin-right: .5rem;
-    margin-left: .5rem;
+    /*margin-right: .5rem;*/
+    /*margin-left: .5rem;*/
     padding-right: 1rem;
     padding-left: 1rem;
     border-radius: .375rem;
@@ -19232,7 +19232,7 @@ textarea[resize='horizontal']
 
     content: '';
 
-    border-left: 2px solid #5e72e4;
+    border-left: 4px solid #5e72e4;
 }
 .navbar-vertical .navbar-nav .nav-link > i
 {
