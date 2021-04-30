@@ -135,10 +135,12 @@ class IngredientController extends Controller
 		$costToShow = $currentCost + $newCost; // total cost to be added to the table
 		
 		// updating the table
-		$currentRawItem->update([
-			'amount' => $amountToShow,
-			'cost' => $costToShow
-		]);
+		if ($currentRawAmount) {
+			$currentRawItem->update([
+				'amount' => $amountToShow,
+				'cost'   => $costToShow
+			]);
+		}
 		if (!$id->is_approved) {
 			$id->is_approved = true;
 			$id->save();
@@ -152,6 +154,17 @@ class IngredientController extends Controller
 	
 	public function destroy(Ingredient $ingredient)
 	{
+		if ($ingredient->raw->amount) {
+			$remainingAmount = $ingredient->raw->amount - $ingredient->amount;
+			$currentCost = $ingredient->amount * $ingredient->unit_price;
+			$remainingCost = $ingredient->raw->cost - $currentCost;
+			$currentRawItem = $ingredient->raw;
+			$currentRawItem->update([
+				'amount' => $remainingAmount,
+				'cost'   => $remainingCost
+			]);
+		}
+		
 		$ingredient->delete();
 		toast('Entry Deleted', 'success');
 		
