@@ -53,7 +53,7 @@
                                         {{ $feed->amount }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $feed->cost }}
+                                        ৳ {{ $feed->cost }}
                                     </td>
                                     <td class="text-center">
                                         {{ $feed->wastage }}%

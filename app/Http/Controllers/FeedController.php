@@ -78,7 +78,7 @@ class FeedController extends Controller
 		    'cost' => $totalFeedCost
 	    ]);
 	
-	    Alert::toast('Feed Made Successfully!')->position('top-end');
+	    Alert::toast('Feed Made Successfully!', 'success')->position('top-end');
 	    return redirect()->route('feed.index');
 	   
     }
