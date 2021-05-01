@@ -22,10 +22,13 @@
                             <h3 class="mb-0">All Raw Items</h3>
                         </div>
                         <div class="col text-right">
-                            <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i
-                                    class="ni ni-atom"></i> Add New Raw Item</a>
-                            <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i
-                                    class="fas fa-asterisk"></i> Add New Entry</a>
+                            @if(Gate::check('app.raw.create'))
+                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Add New Raw Item</a>
+                            @endif
+
+                            @if(Gate::check('app.entry.create'))
+                                <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i class="fas fa-asterisk"></i> Add New Entry</a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -36,7 +39,7 @@
                             <tr>
                                 <th scope="col">Item Name</th>
                                 <th scope="col" class="text-center">Item Code</th>
-                                <th scope="col" class="text-center">Amount Available (kg)</th>
+                                <th scope="col" class="text-center">Amount Available (kg/ltr)</th>
                                 <th scope="col" class="text-center">Total Cost (BDT)</th>
                                 <th scope="col" class="text-center">Avg. Price (BDT)</th>
                                 <th scope="col" class="text-center">Actions</th>
@@ -56,31 +59,33 @@
                                     {{ $item->amount }}
                                 </td>
                                 <td class="text-center">
-                                    {{ $item->cost }}
+                                    ৳ {{ $item->cost }}
                                 </td>
                                 <td class="text-center">
                                     @if(($item->amount) == 0)
                                         0.00
                                     @else
-                                        {{ $item->cost / $item->amount }}
+                                        ৳ {{ $item->cost / $item->amount }}
                                     @endif
 
 
                                 </td>
                                 <td class="text-center">
+                                    @if(Gate::check('app.raw.edit'))
                                     <a href="{{ route('raw-item.edit', [$item]) }}"
-                                        class="btn btn-sm btn-outline-success"><i class="fas fa-edit"
+                                        class="btn btn-sm btn-primary"><i class="fas fa-edit"
                                             data-toggle="tooltip" data-placement="top" title="Edit"
                                             style="margin-right: 0"></i></a>
+                                    @endif
 
-                                    @if((Auth::user()->role->id == 1))
+                                    @if(Gate::check('app.raw.destroy'))
                                     <form id="delete-form-{{$item->id}}"
                                         action="{{ route('raw-item.destroy', [$item]) }}" style="display: inline-block;"
                                         method="POST" data-toggle="tooltip" data-placement="top" title="Delete">
                                         @method('DELETE')
                                         @csrf
                                         <button type="button" onclick="deleteData({{$item->id}})"
-                                            class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                            class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                                     </form>
                                     @endif
                                 </td>

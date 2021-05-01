@@ -133,7 +133,7 @@
                                                class="form-control @error('unit_price') is-invalid @enderror"
                                                id="unit_price"
                                                name="unit_price" {{ !isset($ingredient) ? 'required' : '' }}
-                                               value="{{ $ingredient->amount ?? old('amount') }}"
+                                               value="{{ $ingredient->unit_price ?? old('unit_price') }}"
                                         >
                                         @error('unit_price')
                                         <div class="invalid-feedback" role="alert">
@@ -184,16 +184,16 @@
                                     <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
                                     <span class="btn-inner--text">Add Entry</span>
                                 </button>
-                        @endisset
+                            @endisset
+                        </form>
                     </div>
-                    </form>
+
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <!-- Footer -->
-    @include('layouts.footers.auth')
+        <!-- Footer -->
+        @include('layouts.footers.auth')
     </div>
 
 @endsection

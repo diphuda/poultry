@@ -35,11 +35,22 @@
                             <div class="">
                                 <div class="form-group">
                                     <label class="form-control-label" for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name of the raw item" required>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Name of the raw item" required>
+                                    @error('name')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
+
                                 <div class="form-group">
-                                    <label class="form-control-label" for="code">Item Code</label>
-                                    <input type="text" class="form-control" id="item_code" name="item_code" placeholder="Code of the item" required>
+                                    <label class="form-control-label" for="item_code">Item Code</label>
+                                    <input type="text" class="form-control @error('item_code') is-invalid @enderror" id="item_code" name="item_code" placeholder="Code of the item" required>
+                                    @error('item_code')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <button class="btn btn-icon btn-success float-right" type="submit">
                                     <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>

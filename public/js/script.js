@@ -39,3 +39,24 @@ function approveData($id){
         }
     })
 }
+function makeFeed(){
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to edit this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Make Feed!',
+        cancelButtonText: 'Check Again'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('make-feed').submit();
+            // Swal.fire(
+            //     'Deleted!',
+            //     'Your file has been deleted.',
+            //     'success'
+            // )
+        }
+    })
+}
