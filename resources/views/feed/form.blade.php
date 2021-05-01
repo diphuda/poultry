@@ -1,16 +1,6 @@
 @extends('layouts.app')
 
-@push('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" rel="stylesheet"/>
-
-@endpush
-
-@if(isset($ingredient))
-    @section('title', 'Edit Entry')
-@else
-    @section('title', 'New Entry')
-@endif
+@section('title', 'Make Feed')
 
 @section('content')
     <!-- Header -->
@@ -29,184 +19,105 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-
-                                @if(isset($ingredient))
-                                    <h3 class="mb-0">Edit Entry</h3>
-                                @else
-                                    <h3 class="mb-0">New Entry</h3>
-                                @endif
+                                <h3 class="mb-0">Make Feed</h3>
                             </div>
                         </div>
                     </div>
                     <!-- card body -->
-                    <div class="card-body">
-                        <form action="{{ isset($ingredient) ? route('ingredient.update', $ingredient->id) : route('ingredient.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @isset($ingredient)
-                                @method('PUT')
-                            @endisset
-
-                            <div class="form-group">
-                                <label class="form-control-label" for="raw">Item Name</label>
-                                <select class="form-control js-example-basic-single @error('raw') is-invalid @enderror" data-toggle="select" name="raw"
-                                        {{ !isset($ingredient) ? 'required' : '' }}
-                                >
-                                    <option value="" selected disabled>--- Select a Raw Item ---</option>
-                                    @foreach($raws as $raw)
-                                        <option value="{{ $raw->id }}"
-                                        @isset($ingredient)
-                                            {{ $ingredient->raw->id == $raw->id ? 'selected' : '' }}
-                                                @endisset
-                                        >
-                                            {{ $raw->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-
-                                @error('raw_id')
-                                <div class="invalid-feedback" role="alert">
-                                    This field is required
+                    <div class="card-blockquote">
+                        @if($raws->count() > 0)
+                            <form id="make-feed" action="{{ route('feed.store') }}" method="POST" >
+                                @csrf
+                                <div class="input-group mb-4 mt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-chart-pie"></i></span>
+                                    </div>
+                                    <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" placeholder="Name of the Feed" required value="{{ old('name') }}">
+                                    @error('name')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group">
-                                <label class="form-control-label" for="supplier">Vendor Name </label>
-                                <select class="form-control js-example-basic-single @error('supplier_id') is-invalid @enderror" data-toggle="select" name="supplier"
-                                        {{ !isset($ingredient) ? 'required' : '' }}
-                                >
-                                    <option value="" selected disabled>--- Select a Vendor ---</option>
-                                    @foreach($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}"
-                                        @isset($ingredient)
-                                            {{ $ingredient->supplier->id == $supplier->id ? 'selected' : '' }}
-                                                @endisset
-                                        >
-                                            {{ $supplier->name }}
-                                        </option>
-                                    @endforeach
-
-                                </select>
-
-                                @error('supplier_id')
-                                <div class="invalid-feedback" role="alert">
-                                    This field is required
-                                </div>
-                                @enderror
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="amount">Amount</label>
-                                        <input type="text"
-                                               class="form-control @error('amount') is-invalid @enderror"
-                                               id="amount"
-                                               name="amount" {{ !isset($ingredient) ? 'required' : '' }}
-                                               value="{{ $ingredient->amount ?? old('amount') }}"
-                                        >
-                                        @error('amount')
+                                <div class="table-responsive-sm">
+                                    <table class="table align-items-center table-hover table-flush table-bordered mb-2">
+                                        <thead class="thead-light">
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Available</th>
+                                        <th scope="col">Amount to be used</th>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($raws as $raw)
+                                            <tr>
+                                                <td scope="row">
+                                                    <div class="form-group">
+                                                        <strong class="bold">{{ $raw->name }}</strong>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        {{ $raw->amount }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text"
+                                                               class="form-control @error($raw->id.'-amount') is-invalid @enderror"
+                                                               id="{{ $raw->id }}-amount"
+                                                               name="{{ $raw->id }}-amount"
+                                                               value="{{old($raw->id.'-amount')}}"
+                                                        >
+                                                        @error($raw->id.'-amount')
+                                                        <div class="invalid-feedback" role="alert">
+                                                            Amount must be less than {{ $raw->amount }} and a NUMBER
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <div class="input-group mb-4 mt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                        </div>
+                                        <input class="form-control @error('wastage') is-invalid @enderror" type="text" name="wastage" placeholder="Wastage" value="{{ old('wastage') }}">
+                                        @error('wastage')
                                         <div class="invalid-feedback" role="alert">
-                                            {{ $message }}
+                                            Wastage cannot be 100%
                                         </div>
                                         @enderror
                                     </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="unit">Unit</label>
-                                        <select class="form-control @error('unit') is-invalid @enderror" data-toggle="select" name="unit" required>
-                                            <option value="kg"{{ 'kg' == old('unit', '') ? 'selected' : '' }}>kg</option>
-                                            <option value="ltr"{{ 'ltr' == old('unit', '') ? 'selected' : '' }}>ltr</option>
-                                        </select>
-                                        @error('unit')
-                                        <div class="invalid-feedback" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="unit_price">Unit Price (BDT)</label>
-                                        <input type="text"
-                                               class="form-control @error('unit_price') is-invalid @enderror"
-                                               id="unit_price"
-                                               name="unit_price" {{ !isset($ingredient) ? 'required' : '' }}
-                                               value="{{ $ingredient->amount ?? old('amount') }}"
-                                        >
-                                        @error('unit_price')
-                                        <div class="invalid-feedback" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                                    <button type="button" class="btn btn-icon btn-success float-right mt-5" onclick="makeFeed()">
+                                        <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
+                                        <span class="btn-inner--text">Make Feed</span>
+                                    </button>
 
-                            <div class="form-group">
-                                <label class="form-control-label" for="qc_report">QC Report</label>
-                                <input type="text"
-                                       class="form-control @error('qc_report') is-invalid @enderror"
-                                       id="qc_report"
-                                       name="qc_report" {{ !isset($ingredient) ? 'required' : '' }}
-                                       value="{{ $ingredient->amount ?? old('qc_report') }}"
-                                >
-                                @error('qc_report')
-                                <div class="invalid-feedback" role="alert">
-                                    {{ $message }}
                                 </div>
-                                @enderror
-                            </div>
+                            </form>
+                        @else
+                            <h3 class="text-center text-danger">No Raw Item found in the database</h3>
+                            <div class="col text-center">
+                                @if(Gate::check('app.raw.create'))
+                                    <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Add New Raw Item</a>
+                                @endif
 
-                            <div class="form-group">
-                                <label class="form-control-label" for="file">Receipt <small class="text-gray ml-1">Only JPG, PNG or PDF file allowed</small></label>
-                                <input type="file"
-                                       class="form-control dropify @error('file') is-invalid @enderror"
-                                       id="file"
-                                       data-default-file="{{ isset($ingredient) ? $ingredient->getFirstMediaUrl('file') : '' }}"
-                                       name="file" {{ !isset($ingredient) ? 'required' : '' }}
-                                       value="{{ $ingredient->amount ?? old('file') }}"
-                                >
-                                @error('file')
-                                <div class="invalid-feedback" role="alert">
-                                    {{ $message }}
-                                </div>
-                                @enderror
+                                @if(Gate::check('app.entry.create'))
+                                    <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i class="fas fa-asterisk"></i> Add New Entry</a>
+                                @endif
                             </div>
-                            @isset($ingredient)
-                                <button class="btn btn-icon btn-success float-right" type="submit">
-                                    <span class="btn-inner--icon"><i class="ni ni-check-bold"></i></span>
-                                    <span class="btn-inner--text">Update</span>
-                                </button>
-                            @else
-                                <button class="btn btn-icon btn-success float-right" type="submit">
-                                    <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                    <span class="btn-inner--text">Add Entry</span>
-                                </button>
-                        @endisset
+                        @endif
+
                     </div>
-                    </form>
+
+                </div>
             </div>
+
         </div>
 
-    </div>
-
-    <!-- Footer -->
-    @include('layouts.footers.auth')
+        <!-- Footer -->
+        @include('layouts.footers.auth')
     </div>
 
 @endsection
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script>
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function () {
-            $('.dropify').dropify();
-            $('.js-example-basic-single').select2();
-        });
-    </script>
-
-@endpush

@@ -19,7 +19,9 @@
                                 <h3 class="mb-0">Vendors</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('supplier.create') }}" class="btn btn-sm btn-primary">Add Vendor</a>
+                                @if(Gate::check('app.vendor.create'))
+                                    <a href="{{ route('supplier.create') }}" class="btn btn-sm btn-primary">Add Vendor</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -49,7 +51,7 @@
                                     </td>
                                     <td class="text-center">
                                         <a href="{{ route('supplier.edit', [$supplier]) }}" class="btn btn-sm btn-success"><i class="ni ni-active-40" data-toggle="tooltip" data-placement="top"
-                                                                                                                          title="Edit"></i></a>
+                                                                                                                              title="Edit"></i></a>
 
                                         @if((Auth::user()->role->id == 1))
 

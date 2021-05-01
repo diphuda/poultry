@@ -18,23 +18,27 @@
                             <div class="col">
                                 <h2 class="mb-0">Entry ID: {{ $ingredient->id }}
                                     @if($ingredient->is_approved)
-                                        <span class="badge badge-circle badge-success"><i class="fas fa-check"></i></span>
+                                            <span class="badge badge-circle badge-success"><i class="fas fa-check"></i></span>
                                     @else
                                         <span class="badge badge-circle badge-danger"><i class="fas fa-times"></i></span>
                                     @endif
                                 </h2>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-info"><i
-                                            class="far fa-edit"></i> Edit Entry</a>
+                                @if(Gate::check('app.entry.edit'))
+                                    <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-primary"><i
+                                                class="far fa-edit"></i> Edit Entry</a>
+                                @endif
                             </div>
                             @if(((Auth::user()->role->id == 1) || (Auth::user()->role->id == 2)) && (!$ingredient->is_approved))
                                 <form id="approve-{{$ingredient->id}}" action="{{ route('ingredient.approve', [$ingredient]) }}" style="display: inline-block;" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button type="button" href="#" class="btn btn-sm btn-success" onclick="approveData({{$ingredient->id}})"><i
-                                                class="fas fa-check"></i> Approve Entry
-                                    </button>
+                                    @if(Gate::check('app.entry.approve'))
+                                        <button type="button" href="#" class="btn btn-sm btn-success" onclick="approveData({{$ingredient->id}})"><i
+                                                    class="fas fa-check"></i> Approve Entry
+                                        </button>
+                                    @endif
                                 </form>
                             @endif
                         </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class SupplierController extends Controller
@@ -14,6 +15,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
+	    Gate::authorize('app.vendor.index');
     	$supplier = Supplier::all();
         return view('supplier.index', ['supplier' => $supplier]);
     }
@@ -23,6 +25,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
+	    Gate::authorize('app.vendor.create');
         return view('supplier.create');
     }
 
@@ -31,6 +34,7 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+	    Gate::authorize('app.vendor.create');
         $supplier = new Supplier();
 	    $supplier->name = $request->input('name');
 	    $supplier->address = $request->input('address');
@@ -54,6 +58,7 @@ class SupplierController extends Controller
      */
     public function edit(Supplier $supplier)
     {
+	    Gate::authorize('app.vendor.edit');
         return view('supplier.edit')->with(['supplier'=>$supplier]);
     }
 
@@ -62,6 +67,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
+	    Gate::authorize('app.vendor.edit');
 	    $supply = Supplier::find($id);
 	    $supply->name = $request->input('name');
 	    $supply->address = $request->input('address');
@@ -77,6 +83,7 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
+	    Gate::authorize('app.vendor.destroy');
         $supplier->delete();
 	    toast('Vendor Deleted', 'success');
 	    return back();

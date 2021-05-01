@@ -6,18 +6,22 @@ use App\Models\Ingredient;
 use App\Models\Raw;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class IngredientController extends Controller
 {
 	public function index()
 	{
-		$ingredients = Ingredient::orderBy('created_at', 'DESC')->get();
+		Gate::authorize('app.entry.index');
+		$ingredients = Ingredient::with('supplier', 'raw')->orderBy('created_at', 'DESC')->get();
 		
 		return view('ingredient.index', compact('ingredients'));
 	}
 	
 	public function create()
 	{
+		Gate::authorize('app.entry.create');
 		$raws = Raw::all();
 		$suppliers = Supplier::all();
 		
@@ -27,10 +31,11 @@ class IngredientController extends Controller
 	
 	public function store(Request $request)
 	{
+		Gate::authorize('app.entry.create');
 		$this->validate($request, [
 			'unit'       => 'required',
-			'unit_price' => 'required',
-			'amount'     => 'required',
+			'unit_price' => 'required|numeric',
+			'amount'     => 'required|numeric',
 			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
 			'qc_report'  => 'string',
 		]);
@@ -54,21 +59,27 @@ class IngredientController extends Controller
 		return redirect()->route('ingredient.index');
 	}
 	
+	
 	public function show(Ingredient $ingredient)
 	{
+		Gate::authorize('app.entry.index');
 		return view('ingredient.show', compact('ingredient'));
 	}
 	
+	
 	public function edit(Ingredient $ingredient)
 	{
+		Gate::authorize('app.entry.edit');
 		$raws = Raw::all();
 		$suppliers = Supplier::all();
 		
 		return view('ingredient.form', compact(['raws', 'suppliers', 'ingredient']));
 	}
 	
+	
 	public function update(Request $request, Ingredient $ingredient)
 	{
+		Gate::authorize('app.entry.edit');
 		$this->validate($request, [
 			'unit'       => 'required',
 			'unit_price' => 'required',
@@ -117,10 +128,19 @@ class IngredientController extends Controller
 		return redirect()->route('ingredient.index');
 	}
 	
+	
+	public function pending()
+	{
+		Gate::authorize('app.entry.approve');
+		$ingredients = Ingredient::whereIsApproved(0)->orderBy('created_at', 'DESC')->get();
+//		$pendingCount = Ingredient::whereIsApproved(0)->count();
+		return view('ingredient.pending', compact('ingredients'));
+	}
+	
 	//approve
 	public function approve(Ingredient $id)
 	{
-
+		Gate::authorize('app.entry.approve');
 		$currentRawItem = Raw::find($id->raw_id);
 		$currentRawAmount = $currentRawItem->amount; // getting the existing amount from the table
 		
@@ -152,9 +172,11 @@ class IngredientController extends Controller
 		return back();
 	}
 	
+	
 	public function destroy(Ingredient $ingredient)
 	{
-		if ($ingredient->raw->amount) {
+		Gate::authorize('app.entry.destroy');
+		if ($ingredient->is_approved) {
 			$remainingAmount = $ingredient->raw->amount - $ingredient->amount;
 			$currentCost = $ingredient->amount * $ingredient->unit_price;
 			$remainingCost = $ingredient->raw->cost - $currentCost;
@@ -166,7 +188,7 @@ class IngredientController extends Controller
 		}
 		
 		$ingredient->delete();
-		toast('Entry Deleted', 'success');
+		alert()->success('Deleted!', 'The entry is deleted successfully');
 		
 		return back();
 	}

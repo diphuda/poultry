@@ -94,106 +94,151 @@
                 </div>
             </form>
 
-
-            <!--Navigation for supervisor-->
-            {{--            @if(Auth::user()->role->id == 2)--}}
-            {{--            @endif--}}
             <ul class="navbar-nav">
                 @if(Auth::user()->role->id == 1)
                     <li class="nav-item {{ (Request::is('admin/dashboard'))? 'active' : '' }}">
                         <a class="nav-link {{ (Request::is('admin/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                            <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                         </a>
                     </li>
                 @endif
                 @if(Auth::user()->role->id == 2)
                     <li class="nav-item active">
                         <a class="nav-link {{ (Request::is('supervisor/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                            <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                         </a>
                     </li>
                 @endif
                 @if(Auth::user()->role->id == 3)
                     <li class="nav-item {{ (Request::is('warehouse/dashboard'))? 'active' : '' }}">
                         <a class="nav-link {{ (Request::is('warehouse/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ni ni-tv-2 text-primary"></i> {{ __('Dashboard') }}
+                            <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                         </a>
                     </li>
                 @endif
-                <li class="nav-item {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}">
-                    <a class="nav-link {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}" href="#raw-submenu" data-toggle="collapse" role="button"
-                       aria-expanded="{{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
-                        <i class="ni ni-atom text-green"></i>Raw Items
-                    </a>
-                    <div class="collapse {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'show' : 'collapse' }}" id="raw-submenu">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item {{ ((Request::is('raw-item')))? 'active' : '' }}">
-                                <a class="nav-link {{ (Request::is('/raw-item'))? 'active' : '' }}" href="{{ route('raw-item.index') }}">
-                                    {{ __('All Raw Items') }}
-                                </a>
-                            </li>
-                            <li class="nav-item {{ ((Request::is('raw-item/create')))? 'active' : '' }}">
-                                <a class="nav-link {{ (Request::is('/raw-item/create'))? 'active' : '' }}" href="{{ route('raw-item.create') }}">
-                                    {{ __('Add Raw Item') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @if(Gate::check('app.raw.index') || Gate::check('app.raw.create') || Gate::check('app.raw.edit') || Gate::check('app.raw.destroy'))
+                    <li class="nav-item {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}">
+                        <a class="nav-link {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'active' : '' }}" href="#raw-submenu" data-toggle="collapse" role="button"
+                           aria-expanded="{{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'true' : 'false' }}" aria-controls="raw-submenu">
+                            <i class="ni ni-atom text-primary"></i>Raw Items
+                        </a>
+                        <div class="collapse {{ ((Request::is('raw-item')) || (Request::is('raw-item/create')))? 'show' : 'collapse' }}" id="raw-submenu">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Gate::check('app.raw.index'))
+                                    <li class="nav-item {{ ((Request::is('raw-item')))? 'active' : '' }}">
+                                        <a class="nav-link {{ (Request::is('/raw-item'))? 'active' : '' }}" href="{{ route('raw-item.index') }}">
+                                            {{ __('All Raw Items') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                @if(Gate::check('app.raw.create'))
+                                    <li class="nav-item {{ ((Request::is('raw-item/create')))? 'active' : '' }}">
+                                        <a class="nav-link {{ (Request::is('/raw-item/create'))? 'active' : '' }}" href="{{ route('raw-item.create') }}">
+                                            {{ __('Add Raw Item') }}
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
-                <li class="nav-item {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}">
-                    <a class="nav-link {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}" href="#vendor" data-toggle="collapse" role="button"
-                       aria-expanded="{{ ((Request::is('supplier')) || (Request::is('supplier/create'))) ? 'true' : 'false' }}" aria-controls="raw-submenu">
-                        <i class="ni ni-circle-08 text-orange"></i>Vendors
-                    </a>
-                    <div class="collapse {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'show' : 'collapse' }}" id="vendor">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item {{ ((Request::is('supplier')))? 'active' : '' }}">
-                                <a class="nav-link {{ (Request::is('/supplier'))? 'active' : '' }}" href="{{ route('supplier.index') }}">
-                                    {{ __('All Vendors') }}
-                                </a>
-                            </li>
-                            <li class="nav-item {{ ((Request::is('supplier/create')))? 'active' : '' }}">
-                                <a class="nav-link {{ (Request::is('/supplier/create'))? 'active' : '' }}" href="{{ route('supplier.create') }}">
-                                    {{ __('Add Vendor') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                @if(Gate::check('app.vendor.index') || Gate::check('app.vendor.create') || Gate::check('app.vendor.edit') || Gate::check('app.vendor.destroy'))
+                    <li class="nav-item {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}">
+                        <a class="nav-link {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'active' : '' }}" href="#vendor" data-toggle="collapse" role="button"
+                           aria-expanded="{{ ((Request::is('supplier')) || (Request::is('supplier/create'))) ? 'true' : 'false' }}" aria-controls="raw-submenu">
+                            <i class="ni ni-circle-08 text-info"></i>Vendors
+                        </a>
+                        <div class="collapse {{ ((Request::is('supplier')) || (Request::is('supplier/create')))? 'show' : 'collapse' }}" id="vendor">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Gate::check('app.vendor.index'))
+                                    <li class="nav-item {{ ((Request::is('supplier')))? 'active' : '' }}">
+                                        <a class="nav-link {{ (Request::is('/supplier'))? 'active' : '' }}" href="{{ route('supplier.index') }}">
+                                            {{ __('All Vendors') }}
+                                        </a>
+                                    </li>
+                                @endif
 
-                <li class="nav-item {{ (request()->is('ingredient*')) ? 'active' : '' }}">
-                    <a class="nav-link {{ (request()->is('ingredient*')) ? 'active' : '' }}" href="#ingredient-submenu" data-toggle="collapse" role="button"
-                       aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="ingredient-submenu">
-                        <i class="fas fa-asterisk text-green"></i>Raw Entry
-                    </a>
-                    <div class="collapse {{ (request()->is('ingredient*')) ? 'show' : 'collapse' }}" id="ingredient-submenu">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item {{ (request()->is('ingredient')) ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('ingredient.index') }}">
-                                    {{ __('All Entries') }}
-                                </a>
-                            </li>
-                            <li class="nav-item {{ (request()->is('ingredient/create')) ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('ingredient.create') }}">
-                                    {{ __('Add Entry') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                                @if(Gate::check('app.vendor.create'))
+                                    <li class="nav-item {{ ((Request::is('supplier/create')))? 'active' : '' }}">
+                                        <a class="nav-link {{ (Request::is('/supplier/create'))? 'active' : '' }}" href="{{ route('supplier.create') }}">
+                                            {{ __('Add Vendor') }}
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
+                @if(Gate::check('app.entry.index') || Gate::check('app.entry.edit'))
+                    <li class="nav-item {{ (request()->is('ingredient*')) ? 'active' : '' }}">
+                        <a class="nav-link {{ (request()->is('ingredient*')) ? 'active' : '' }}" href="#ingredient-submenu" data-toggle="collapse" role="button"
+                           aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="ingredient-submenu">
+                            <i class="fas fa-asterisk text-green"></i>Raw Entry
+                        </a>
+                        <div class="collapse {{ (request()->is('ingredient*')) ? 'show' : 'collapse' }}" id="ingredient-submenu">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Gate::check('app.entry.index'))
+                                    <li class="nav-item {{ (request()->is('ingredient')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('ingredient.index') }}">
+                                            {{ __('All Entries') }}
+                                        </a>
+                                    </li>
+                                @endif
 
-                <li class="nav-item">
-                    <a class="nav-link " href="feed-making.html">
-                        <i class="ni ni-chart-pie-35 text-teal"></i> Feed Making
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="finished-goods.html">
-                        <i class="ni ni-single-02 text-orange"></i> Finished Goods
-                    </a>
-                </li>
+                                @if(Gate::check('app.entry.create'))
+                                    <li class="nav-item {{ (request()->is('ingredient/create')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('ingredient.create') }}">
+                                            {{ __('Add Entry') }}
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+                @if(Gate::check('app.entry.approve'))
+                    <li class="nav-item {{ (Request::is('pending'))? 'active' : '' }}">
+                        <a class="nav-link {{ (Request::is('pending'))? 'active' : '' }}" href="{{ route('ingredient.pending') }}">
+                            <i class="fas fa-exclamation-triangle text-warning"></i> {{ __('Pending Approvals') }}
+                            @if($pendingCount)
+                                <span class="badge badge-warning ml-2">{{ $pendingCount }}</span>
+                            @else
+                                <span class="badge badge-success ml-2">0</span>
+                            @endif
+                        </a>
+                    </li>
+                @endif
+
+                    @if(Gate::check('app.feed.index') || Gate::check('app.feed.create'))
+                        <li class="nav-item {{ (request()->is('feed*')) ? 'active' : '' }}">
+                            <a class="nav-link {{ (request()->is('feed*')) ? 'active' : '' }}" href="#feed" data-toggle="collapse" role="button"
+                               aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="ingredient-submenu">
+                                <i class="fa fa-pie-chart text-primary"></i>Feed
+                            </a>
+                            <div class="collapse {{ (request()->is('feed*')) ? 'show' : 'collapse' }}" id="feed">
+                                <ul class="nav nav-sm flex-column">
+                                    @if(Gate::check('app.feed.index'))
+                                        <li class="nav-item {{ (request()->is('feed')) ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('feed.index') }}">
+                                                {{ __('Feed List') }}
+                                            </a>
+                                        </li>
+                                    @endif
+
+                                    @if(Gate::check('app.feed.create'))
+                                        <li class="nav-item {{ (request()->is('feed/create')) ? 'active' : '' }}">
+                                            <a class="nav-link" href="{{ route('feed.create') }}">
+                                                {{ __('Make Feed') }}
+                                            </a>
+                                        </li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
                 <li class="nav-item">
                     <a class="nav-link " href="distribution.html">
                         <i class="ni ni-box-2 text-info"></i> Distribution

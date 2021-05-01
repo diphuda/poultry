@@ -15,6 +15,10 @@ class CreateFeedsTable extends Migration
     {
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->decimal('wastage')->nullable();
+            $table->decimal('amount');
+            $table->decimal('cost');
             $table->timestamps();
         });
     }

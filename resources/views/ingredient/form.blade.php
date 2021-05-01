@@ -184,16 +184,16 @@
                                     <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
                                     <span class="btn-inner--text">Add Entry</span>
                                 </button>
-                        @endisset
+                            @endisset
+                        </form>
                     </div>
-                    </form>
+
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <!-- Footer -->
-    @include('layouts.footers.auth')
+        <!-- Footer -->
+        @include('layouts.footers.auth')
     </div>
 
 @endsection

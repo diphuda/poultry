@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'All Ingredients')
+@section('title', 'Feed List')
 
 @push('css')
     <!--Datatable CSS-->
@@ -19,11 +19,10 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">All Raw Entries</h3>
+                                <h3 class="mb-0">Feed List</h3>
                             </div>
                             <div class="col text-right">
-                                <a href="{{ route('raw-item.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Add New Raw Item</a>
-                                <a href="{{ route('ingredient.create') }}" class="btn btn-sm btn-success"> <i class="fas fa-asterisk"></i> Add New Entry</a>
+                                <a href="{{ route('feed.create') }}" class="btn btn-sm btn-primary"> <i class="fa fa-pie-chart mr-1"></i> Make Feed</a>
                             </div>
                         </div>
                     </div>
@@ -34,65 +33,33 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Supplier</th>
-                                <th scope="col" class="text-center">Unit (kg/ltr)</th>
-                                <th scope="col" class="text-center">Unit Price(tk)</th>
-                                <th scope="col" class="text-center">Cost(tk)</th>
-                                <th scope="col" class="text-center">Approved</th>
+                                <th scope="col" class="text-center">Amount(KG)</th>
+                                <th scope="col" class="text-center">Cost(BDT)</th>
+                                <th scope="col" class="text-center">Wastage</th>
                                 <th scope="col" class="text-center">Date</th>
-                                <th scope="col" class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            @foreach($ingredients as $key=>$ingredient)
+                            @foreach($feeds as $key=>$feed)
                                 <tr>
                                     <th>
                                         {{ $key+1 }}
                                     </th>
                                     <th>
-                                        {{ $ingredient->raw->name }}
+                                        {{ $feed->name }}
                                     </th>
                                     <td class="text-center">
-                                        {{ $ingredient->supplier->name }}
+                                        {{ $feed->amount }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->unit_price }}
+                                        {{ $feed->cost }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->amount }}
+                                        {{ $feed->wastage }}%
                                     </td>
                                     <td class="text-center">
-                                        {{ $ingredient->unit_price * $ingredient->amount }}
-                                    </td>
-                                    <td class="text-center">
-                                        @if($ingredient->is_approved)
-                                            <span class="badge badge-pill badge-success">Yes</span>
-                                        @else
-                                            <span class="badge badge-pill badge-warning">No</span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        {{ $ingredient->created_at->format('d M Y') }}
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-outline-success"><i class="fas fa-eye" data-toggle="tooltip" data-placement="top"
-                                                                                                                                          title="View Detail" style="margin-right: 0"></i></a>
-                                        <a href="{{ route('ingredient.edit', [$ingredient]) }}" class="btn btn-sm btn-outline-info"><i
-                                                    class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
-
-                                        @if((Auth::user()->role->id == 1))
-                                            <form id="delete-form-{{ $ingredient->id }}"
-                                                  action="{{ route('ingredient.destroy', [$ingredient]) }}"
-                                                  style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
-                                                  title="Delete">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button type="button" class="btn btn-sm btn-outline-danger"
-                                                        onclick="deleteData({{$ingredient->id}})"><i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        @endif
+                                        {{ $feed->created_at->format('d M Y') }}
                                     </td>
                                 </tr>
                             @endforeach

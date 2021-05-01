@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'All Ingredients')
+@section('title', 'Pending Entry')
 
 @push('css')
     <!--Datatable CSS-->
@@ -19,7 +19,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">All Raw Entries</h3>
+                                <h3 class="mb-0">Pending Entry</h3>
                             </div>
                             <div class="col text-right">
                                 @if(Gate::check('app.raw.create'))
@@ -34,7 +34,7 @@
                     </div>
                     <div class="table-responsive py-4">
                         <!-- Projects table -->
-                        <table class="table table-flush table-hover" id="datatable-buttons">
+                        <table class="table table-flush" id="datatable-buttons">
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col">#</th>
@@ -84,8 +84,8 @@
                                     <td class="text-center">
                                         @if(Gate::check('app.entry.index'))
                                             <a href="{{ route('ingredient.show', [$ingredient]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip"
-                                                                                                                                              data-placement="top"
-                                                                                                                                              title="View Detail" style="margin-right: 0"></i></a>
+                                                                                                                                      data-placement="top"
+                                                                                                                                      title="View Detail" style="margin-right: 0"></i></a>
                                         @endif
 
                                         @if(Gate::check('app.entry.edit'))

@@ -15,8 +15,8 @@ class CreateRawsTable extends Migration
     {
         Schema::create('raws', function (Blueprint $table) {
             $table->id();
-	        $table->string('name');
-	        $table->string('item_code');
+	        $table->string('name')->unique();
+	        $table->string('item_code')->unique();
 	        $table->decimal('amount', 6, 2)->nullable()->default('0');
 	        $table->decimal('cost', 6, 2)->nullable()->default('0');
             $table->timestamps();

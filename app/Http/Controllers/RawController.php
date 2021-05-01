@@ -32,8 +32,8 @@ class RawController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'      => 'required',
-            'item_code' => 'required',
+            'name'      => 'required|unique:raws',
+            'item_code' => 'required|unique:raws',
         ]);
 
         $item = new Raw();

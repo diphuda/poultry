@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RawController;
 use App\Http\Controllers\Supervisor\SupervisorDashboardController;
@@ -51,8 +52,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('users', UserController::class);
 	Route::resource('raw-item', RawController::class);
 	Route::resource('ingredient', IngredientController::class);
-	Route::get('ingredient/pending', [IngredientController::class, 'pending'])->name('ingredient.pending');
+	Route::get('pending', [IngredientController::class, 'pending'])->name('ingredient.pending');
 	Route::put('ingredient/{id}/approve', [IngredientController::class, 'approve'])->name('ingredient.approve');
+	Route::resource('feed', FeedController::class);
 	
 	//	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
