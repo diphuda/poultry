@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RawController;
@@ -19,27 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
-	
-	//	Route::get('dashboard', 'SupervisorDashboardController@index')->name('dashboard');
-	Route::get('/dashboard', [DashboardController::class, 'index'])
-		->name('dashboard');
-	
-});
-
-
-Route::group(['as' => 'supervisor.', 'prefix' => 'supervisor', 'namespace' => 'Supervisor', 'middleware' => ['auth', 'supervisor']], function () {
-	
-	//	Route::get('dashboard', 'SupervisorDashboardController@index')->name('dashboard');
-	Route::get('/dashboard', [SupervisorDashboardController::class, 'index'])
-		->name('dashboard');
-});
-
-Route::group(['as' => 'warehouse.', 'prefix' => 'warehouse', 'namespace' => 'Warehouse', 'middleware' => ['auth', 'warehouse']], function () {
-	
-	Route::get('/dashboard', [WarehouseDashboardController::class, 'index'])
-		->name('dashboard');
-});
 
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -48,6 +28,8 @@ Route::group(['as' => 'warehouse.', 'prefix' => 'warehouse', 'namespace' => 'War
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+	Route::get('dashboard', [DashboardController::class, 'index'])
+		->name('admin.dashboard');
 	Route::resource('roles', RoleController::class);
 	Route::resource('users', UserController::class);
 	Route::resource('raw-item', RawController::class);
@@ -55,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('pending', [IngredientController::class, 'pending'])->name('ingredient.pending');
 	Route::put('ingredient/{id}/approve', [IngredientController::class, 'approve'])->name('ingredient.approve');
 	Route::resource('feed', FeedController::class);
+	Route::resource('distribution', DistributionController::class);
 	
 	//	Route::resource('ingredient', ::class);
 	Route::resource('supplier', SupplierController::class);
