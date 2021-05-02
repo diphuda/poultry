@@ -30,7 +30,7 @@
                                                 class="far fa-edit"></i> Edit Entry</a>
                                 @endif
                             </div>
-                            @if(((Auth::user()->role->id == 1) || (Auth::user()->role->id == 2)) && (!$ingredient->is_approved))
+                            @if(Gate::check('app.entry.approve') && (!$ingredient->is_approved))
                                 <form id="approve-{{$ingredient->id}}" action="{{ route('ingredient.approve', [$ingredient]) }}" style="display: inline-block;" method="POST">
                                     @csrf
                                     @method('PUT')

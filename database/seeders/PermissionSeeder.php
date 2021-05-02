@@ -165,5 +165,28 @@ class PermissionSeeder extends Seeder
 		    'name' => 'Delete Vendor',
 		    'slug' => 'app.feed.destroy'
 	    ]);
+	    
+	    //distribution management
+	    $moduleAppUser = Module::updateOrCreate(['name' => 'Distribution Permission']);
+	    Permission::updateOrCreate([
+		    'module_id' => $moduleAppUser->id,
+		    'name' => 'View',
+		    'slug' => 'app.dist.index'
+	    ]);
+	    Permission::updateOrCreate([
+		    'module_id' => $moduleAppUser->id,
+		    'name' => 'Create Distribution',
+		    'slug' => 'app.dist.create'
+	    ]);
+	    Permission::updateOrCreate([
+		    'module_id' => $moduleAppUser->id,
+		    'name' => 'Edit Distribution',
+		    'slug' => 'app.dist.edit'
+	    ]);
+	    Permission::updateOrCreate([
+		    'module_id' => $moduleAppUser->id,
+		    'name' => 'Delete Distribution',
+		    'slug' => 'app.dist.destroy'
+	    ]);
     }
 }

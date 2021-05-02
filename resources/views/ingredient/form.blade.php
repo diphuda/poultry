@@ -150,7 +150,7 @@
                                        class="form-control @error('qc_report') is-invalid @enderror"
                                        id="qc_report"
                                        name="qc_report" {{ !isset($ingredient) ? 'required' : '' }}
-                                       value="{{ $ingredient->amount ?? old('qc_report') }}"
+                                       value="{{ $ingredient->qc_report ?? old('qc_report') }}"
                                 >
                                 @error('qc_report')
                                 <div class="invalid-feedback" role="alert">

@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Feed extends Model
+class Distribution extends Model
 {
     use HasFactory;
 	protected $guarded = ['id'];
 	
-	public function user()
+	public function feed()
 	{
-		return $this->belongsTo(User::class);
-	}
-	public function distributions()
-	{
-		return $this->hasMany(Distribution::class);
+		return $this->belongsTo(Feed::class);
 	}
 }

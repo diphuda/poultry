@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Distribution;
 use App\Models\Ingredient;
 use App\Models\Raw;
 use App\Models\Supplier;

@@ -5,20 +5,8 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        @if(Auth::user()->role->id == 1)
+        @if(Gate::check('app.dashboard'))
             <a class="navbar-brand pt-0" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-            </a>
-        @elseif(Auth::user()->role->id == 2)
-            <a class="navbar-brand pt-0" href="{{ route('supervisor.dashboard') }}">
-                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-            </a>
-        @elseif(Auth::user()->role->id == 3)
-            <a class="navbar-brand pt-0" href="{{ route('warehouse.dashboard') }}">
-                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-            </a>
-        @else
-            <a class="navbar-brand pt-0" href="{{ route('login') }}">
                 <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
             </a>
     @endif
@@ -55,20 +43,8 @@
             <div class="navbar-collapse-header d-md-none">
                 <div class="row">
                     <div class="col-6 collapse-brand">
-                        @if(Auth::user()->role->id == 1)
+                        @if(Gate::check('app.dashboard'))
                             <a class="navbar-brand pt-0" href="{{ route('admin.dashboard') }}">
-                                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-                            </a>
-                        @elseif(Auth::user()->role->id == 2)
-                            <a class="navbar-brand pt-0" href="{{ route('supervisor.dashboard') }}">
-                                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-                            </a>
-                        @elseif(Auth::user()->role->id == 3)
-                            <a class="navbar-brand pt-0" href="{{ route('warehouse.dashboard') }}">
-                                <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
-                            </a>
-                        @else
-                            <a class="navbar-brand pt-0" href="{{ route('login') }}">
                                 <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
                             </a>
                         @endif
@@ -95,23 +71,9 @@
             </form>
 
             <ul class="navbar-nav">
-                @if(Auth::user()->role->id == 1)
-                    <li class="nav-item {{ (Request::is('admin/dashboard'))? 'active' : '' }}">
-                        <a class="nav-link {{ (Request::is('admin/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
-                        </a>
-                    </li>
-                @endif
-                @if(Auth::user()->role->id == 2)
-                    <li class="nav-item active">
-                        <a class="nav-link {{ (Request::is('supervisor/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
-                        </a>
-                    </li>
-                @endif
-                @if(Auth::user()->role->id == 3)
-                    <li class="nav-item {{ (Request::is('warehouse/dashboard'))? 'active' : '' }}">
-                        <a class="nav-link {{ (Request::is('warehouse/dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                @if(Gate::check('app.dashboard'))
+                    <li class="nav-item {{ (Request::is('dashboard'))? 'active' : '' }}">
+                        <a class="nav-link {{ (Request::is('dashboard'))? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                             <i class="ni ni-tv-2 text-warning"></i> {{ __('Dashboard') }}
                         </a>
                     </li>
@@ -212,57 +174,77 @@
                     </li>
                 @endif
 
-                    @if(Gate::check('app.feed.index') || Gate::check('app.feed.create'))
-                        <li class="nav-item {{ (request()->is('feed*')) ? 'active' : '' }}">
-                            <a class="nav-link {{ (request()->is('feed*')) ? 'active' : '' }}" href="#feed" data-toggle="collapse" role="button"
-                               aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="ingredient-submenu">
-                                <i class="fa fa-pie-chart text-primary"></i>Feed
-                            </a>
-                            <div class="collapse {{ (request()->is('feed*')) ? 'show' : 'collapse' }}" id="feed">
-                                <ul class="nav nav-sm flex-column">
-                                    @if(Gate::check('app.feed.index'))
-                                        <li class="nav-item {{ (request()->is('feed')) ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ route('feed.index') }}">
-                                                {{ __('Feed List') }}
-                                            </a>
-                                        </li>
-                                    @endif
+                @if(Gate::check('app.feed.index') || Gate::check('app.feed.create'))
+                    <li class="nav-item {{ (request()->is('feed*')) ? 'active' : '' }}">
+                        <a class="nav-link {{ (request()->is('feed*')) ? 'active' : '' }}" href="#feed" data-toggle="collapse" role="button"
+                           aria-expanded="{{ (request()->is('ingredient*')) ? 'true' : 'false' }}" aria-controls="feed">
+                            <i class="fa fa-pie-chart text-primary"></i>Feed
+                        </a>
+                        <div class="collapse {{ (request()->is('feed*')) ? 'show' : 'collapse' }}" id="feed">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Gate::check('app.feed.index'))
+                                    <li class="nav-item {{ (request()->is('feed')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('feed.index') }}">
+                                            {{ __('Feed List') }}
+                                        </a>
+                                    </li>
+                                @endif
 
-                                    @if(Gate::check('app.feed.create'))
-                                        <li class="nav-item {{ (request()->is('feed/create')) ? 'active' : '' }}">
-                                            <a class="nav-link" href="{{ route('feed.create') }}">
-                                                {{ __('Make Feed') }}
-                                            </a>
-                                        </li>
-                                    @endif
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
-                <li class="nav-item">
-                    <a class="nav-link " href="distribution.html">
-                        <i class="ni ni-box-2 text-info"></i> Distribution
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="accounting.html">
-                        <i class="ni ni-money-coins text-green"></i> Accounting
-                    </a>
-                </li>
-                @if(Auth::user()->role->id == 1)
+                                @if(Gate::check('app.feed.create'))
+                                    <li class="nav-item {{ (request()->is('feed/create')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('feed.create') }}">
+                                            {{ __('Make Feed') }}
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+                @if(Gate::check('app.dist.index') || Gate::check('app.dist.create') || Gate::check('app.dist.edit') || Gate::check('app.dist.destroy'))
+                    <li class="nav-item {{ (request()->is('distribution*')) ? 'active' : '' }}">
+                        <a class="nav-link {{ (request()->is('distribution*')) ? 'active' : '' }}" href="#distribution" data-toggle="collapse" role="button"
+                           aria-expanded="{{ (request()->is('distribution*')) ? 'true' : 'false' }}" aria-controls="distribution">
+                            <i class="ni ni-box-2 text-info"></i>Distribution
+                        </a>
+                        <div class="collapse {{ (request()->is('distribution*')) ? 'show' : 'collapse' }}" id="distribution">
+                            <ul class="nav nav-sm flex-column">
+                                @if(Gate::check('app.dist.index'))
+                                    <li class="nav-item {{ (request()->is('distribution')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('distribution.index') }}">
+                                            {{ __('Distribution History') }}
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if(Gate::check('app.dist.create'))
+                                    <li class="nav-item {{ (request()->is('distribution/create')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('distribution.create') }}">
+                                            {{ __('Create Distribution') }}
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                @if(Gate::check('app.roles.index') || Gate::check('app.roles.create') || Gate::check('app.roles.edit') || Gate::check('app.roles.destroy'))
                     <li class="nav-item {{ (request()->is('roles*'))? 'active' : '' }}">
                         <a class="nav-link {{ (request()->is('roles*'))? 'active' : '' }}" href="{{ route('roles.index') }}">
                             <i class="ni ni-ui-04 text-orange"></i> {{ __('Roles & Permissions   ') }}
                         </a>
                     </li>
                 @endif
-                <li class="nav-item {{ (request()->is('users*')) ? 'active' : '' }}">
-                    <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="{{ route('users.index') }}">
-                        <i class="fas fa-users-cog text-success"></i></i> {{ __('User Management') }}
-                    </a>
-                </li>
+                @if(Gate::check('app.users.index') || Gate::check('app.users.create') || Gate::check('app.users.edit') || Gate::check('app.users.destroy'))
+                    <li class="nav-item {{ (request()->is('users*')) ? 'active' : '' }}">
+                        <a class="nav-link {{ (request()->is('users*')) ? 'active' : '' }}" href="{{ route('users.index') }}">
+                            <i class="fas fa-users-cog text-success"></i></i> {{ __('User Management') }}
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('logout') }}">
                         <i class="ni ni-button-power text-gray"></i> Logout
                     </a>
                 </li>
