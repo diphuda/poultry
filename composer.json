@@ -62,11 +62,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "config": {
-        "platform": {
-            "php": "7.1.14"
-        }
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
