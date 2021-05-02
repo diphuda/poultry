@@ -61,9 +61,10 @@ class FeedController extends Controller
 		    $avgRawCost = $raw->cost / $raw->amount;
 		    $amountWithWastage = $inputtedAmount - ($inputtedAmount* ($wastage / 100));
 		    $rawCost = $inputtedAmount * $avgRawCost;
+		    $finalCost = $rawCost + ($rawCost * (($wastage / 100)));
 		
 		    $totalFeedAmount += $amountWithWastage;
-		    $totalFeedCost += $rawCost;
+		    $totalFeedCost += $finalCost;
 		    
 		    $raw->update([
 		    	'amount' => $newRawAmount,
