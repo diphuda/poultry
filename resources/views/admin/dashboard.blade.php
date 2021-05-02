@@ -55,6 +55,7 @@
                             </thead>
                             <tbody>
                             @foreach($item as $item)
+                                <tr>
                                 <th scope="row">
                                     {{ $item->name }}
                                 </th>
@@ -67,7 +68,8 @@
                                     @else
                                         ৳ {{ $item->cost / $item->amount }}
                                     @endif
-                                </td>
+                                </td></tr>
+
                             @endforeach
                             </tbody>
                         </table>
@@ -97,12 +99,14 @@
                             </thead>
                             <tbody>
                             @foreach($feeds as $key=>$feed)
+                                <tr>
                                 <th scope="row">
                                     {{ $feed->name }}
                                 </th>
                                 <td class="text-center">
                                     {{ $feed->amount }}
-                                </td>
+                                </td></tr>
+
                             @endforeach
                             </tbody>
                         </table>

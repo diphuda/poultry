@@ -124,8 +124,8 @@ class IngredientController extends Controller
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
 		}
-		alert()->success('Done!', 'Entry Updated successfully');
 		
+		alert()->success('Done!', 'Entry Updated successfully');
 		return redirect()->route('ingredient.index');
 	}
 	

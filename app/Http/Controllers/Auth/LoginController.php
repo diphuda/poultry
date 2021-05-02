@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class LoginController extends Controller
 {
@@ -30,13 +31,6 @@ class LoginController extends Controller
 	 */
 	public function __construct()
 	{
-		if (Auth::check() && Auth::user()->role->id == 1) {
-			return redirect()->route('admin.dashboard');
-		} elseif (Auth::check() && Auth::user()->role->id == 2) {
-			return redirect()->route('supervisor.dashboard');
-		} elseif (Auth::check() && Auth::user()->role->id == 3) {
-			return redirect()->route('warehouse.dashboard');
-		}
 		$this->middleware('guest')->except('logout');
 	}
 }

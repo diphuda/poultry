@@ -107,9 +107,22 @@ class DistributionController extends Controller
 	    $newFeedAmount = $request->amount;
 	    
 	    $finalAmount = ($feedAmount + $oldFeedAmount) - $newFeedAmount;
-	    
-	    return $finalAmount;
-	    
+	
+	    $feedItem->update([
+	    	'amount' => $finalAmount
+	    ]);
+	
+	    $distribution->update([
+		    'feed_id' => $request->feed,
+		    'unit_price' => $request->unit_price,
+		    'amount' => $request->amount,
+		    'buyer_name' => $request->buyer_name,
+		    'buyer_address' => $request->buyer_address,
+		    'buyer_phone' => $request->buyer_phone
+	    ]);
+	
+	    alert()->success('Done!', 'Updated successfully');
+	    return redirect()->route('distribution.index');
 	    
     }
 
