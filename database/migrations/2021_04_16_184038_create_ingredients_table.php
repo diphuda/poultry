@@ -13,9 +13,9 @@ class CreateIngredientsTable extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('raw_id')->constrained('raws')->onDelete('cascade');
-            $table->foreignId('supplier_id')->constrained();
+            $table->foreignId('user_id');
+            $table->foreignId('raw_id');
+            $table->foreignId('supplier_id');
             $table->string('unit');
             $table->decimal('unit_price',6, 2);
             $table->decimal('amount', 6, 2);
