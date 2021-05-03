@@ -134,7 +134,6 @@ class IngredientController extends Controller
 	{
 		Gate::authorize('app.entry.approve');
 		$ingredients = Ingredient::whereIsApproved(0)->orderBy('created_at', 'DESC')->get();
-//		$pendingCount = Ingredient::whereIsApproved(0)->count();
 		return view('ingredient.pending', compact('ingredients'));
 	}
 	
