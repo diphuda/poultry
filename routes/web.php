@@ -7,6 +7,7 @@ use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RawController;
+use App\Http\Controllers\RawDistributionController;
 use App\Http\Controllers\Supervisor\SupervisorDashboardController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\Warehouse\WarehouseDashboardController;
@@ -29,7 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('roles', RoleController::class);
 	Route::resource('users', UserController::class);
 	Route::resource('raw-item', RawController::class);
-//	Route::put('raw-item/{id}/distribute', [RawController::class, 'distribute'])->name('raw-item.distribute');
+	Route::resource('raw-sell', RawDistributionController::class);
 	Route::resource('ingredient', IngredientController::class);
 	Route::get('pending', [IngredientController::class, 'pending'])->name('ingredient.pending');
 	Route::put('ingredient/{id}/approve', [IngredientController::class, 'approve'])->name('ingredient.approve');

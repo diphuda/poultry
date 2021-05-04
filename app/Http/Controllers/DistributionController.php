@@ -16,8 +16,10 @@ class DistributionController extends Controller
     public function index()
     {
         //Gate::authorize('app.dist.index');
-	    $distributions = Distribution::with('feed')->orderBy('created_at', 'DESC')->get();
-	    return view('distribution.index', compact('distributions'));
+	    $rawdist = Distribution::whereFeedId(null)->with('raw')->orderBy('created_at', 'DESC')->get();
+	    $feedDist = Distribution::whereRawId(null)->with('feed')->orderBy('created_at', 'DESC')->get();
+
+	    return view('distribution.index', compact('feedDist','rawdist'));
     }
 
     /**
@@ -78,7 +80,8 @@ class DistributionController extends Controller
     public function show(Distribution $distribution)
     {
         Gate::check('app.dist.index');
-        return view('distribution.show', compact('distribution'));
+//        return view('distribution.show', compact('distribution'));
+        return $distribution;
     }
 
     /**

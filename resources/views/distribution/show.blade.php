@@ -19,10 +19,10 @@
                                 <h2 class="mb-0">Distribution ID: {{ $distribution->id }}</h2>
                             </div>
                             <div class="col text-right">
-                                @if(Gate::check('app.dist.edit'))
-                                    <a href="{{ route('distribution.edit', [$distribution]) }}" class="btn btn-sm btn-primary"><i
-                                                class="far fa-edit"></i> Edit Entry</a>
-                                @endif
+{{--                                @if(Gate::check('app.dist.edit'))--}}
+{{--                                    <a href="{{ route('distribution.edit', [$distribution]) }}" class="btn btn-sm btn-primary"><i--}}
+{{--                                                class="far fa-edit"></i> Edit Entry</a>--}}
+{{--                                @endif--}}
                             </div>
                         </div>
                     </div>

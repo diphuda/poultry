@@ -55,7 +55,7 @@
                                     @foreach($feeds as $feed)
                                         <option value="{{ $feed->id }}"
                                         @isset($distribution)
-                                            {{ $distribution->feed->id == $feed->id ? 'selected' : '' }}
+                                            {{ $distribution->feed->id == $feed->id ? 'selected' : 'disabled' }}
                                                 @endisset
                                         >
                                             {{ $feed->name }}

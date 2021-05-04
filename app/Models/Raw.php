@@ -17,6 +17,11 @@ class Raw extends Model
 
     public function user()
     {
-        $this->belongsTo(\App\User::class);
+        return $this->belongsTo(\App\User::class);
+    }
+	
+	public function distributions()
+	{
+		return $this->hasMany(Distribution::class);
     }
 }

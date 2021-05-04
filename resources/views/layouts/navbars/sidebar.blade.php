@@ -209,7 +209,7 @@
                            aria-expanded="{{ (request()->is('distribution*')) ? 'true' : 'false' }}" aria-controls="distribution">
                             <i class="ni ni-box-2 text-info"></i>Distribution
                         </a>
-                        <div class="collapse {{ (request()->is('distribution*')) ? 'show' : 'collapse' }}" id="distribution">
+                        <div class="collapse {{ (request()->is('distribution*')) || (request()->is('raw-sell*')) ? 'show' : 'collapse' }}" id="distribution">
                             <ul class="nav nav-sm flex-column">
                                 @if(Gate::check('app.dist.index'))
                                     <li class="nav-item {{ (request()->is('distribution')) ? 'active' : '' }}">
@@ -222,7 +222,14 @@
                                 @if(Gate::check('app.dist.create'))
                                     <li class="nav-item {{ (request()->is('distribution/create')) ? 'active' : '' }}">
                                         <a class="nav-link" href="{{ route('distribution.create') }}">
-                                            {{ __('Create Distribution') }}
+                                            {{ __('Sell Feed') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                    @if(Gate::check('app.dist.create'))
+                                    <li class="nav-item {{ (request()->is('raw-sell/create')) ? 'active' : '' }}">
+                                        <a class="nav-link" href="{{ route('raw-sell.create') }}">
+                                            {{ __('Sell Raw Item') }}
                                         </a>
                                     </li>
                                 @endif
