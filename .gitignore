@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 storage/logs/laravel.log
+/storage/logs/
+storage/logs/laravel-2021-05-04.log
