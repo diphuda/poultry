@@ -49,13 +49,13 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="raw">Item Name</label>
                                 <select class="form-control js-example-basic-single @error('raw') is-invalid @enderror" data-toggle="select" name="raw"
-                                        {{ !isset($distribution) ? 'required' : '' }}
+                                        {{ !isset($distribution) ? 'required' : 'disabled' }}
                                 >
                                     <option value="" selected disabled>--- Select Raw Item ---</option>
                                     @foreach($raws as $raw)
                                         <option value="{{ $raw->id }}"
                                         @isset($distribution)
-                                            {{ $distribution->raw->id == $raw->id ? 'selected' : 'disabled' }}
+                                            {{ $distribution->raw->id == $raw->id ? 'selected' : '' }}
                                                 @endisset
                                         >
                                             {{ $raw->name }}

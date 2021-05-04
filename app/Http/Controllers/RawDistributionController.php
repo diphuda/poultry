@@ -37,9 +37,11 @@ class RawDistributionController extends Controller
     public function store(Request $request)
     {
 	    Gate::authorize('app.dist.create');
+	    $rawItem = Raw::find($request->raw);
+	    
 	    $this->validate($request, [
 		    'unit_price' => 'required|numeric',
-		    'amount'   => 'required|numeric',
+		    'amount'   => 'required|numeric|max:'.$rawItem->amount,
 		    'buyer_name' => 'required|string|max:255',
 		    'buyer_address' => 'required',
 		    'buyer_phone' => 'required'
@@ -55,7 +57,6 @@ class RawDistributionController extends Controller
 	    ]);
 	    
 	    //update raw amount
-	    $rawItem = Raw::find($request->raw);
 	    $rawAmount = $rawItem->amount;
 	    $soldAmount = $request->amount;
 	    $newRawAmount = $rawAmount - $soldAmount;
@@ -97,16 +98,16 @@ class RawDistributionController extends Controller
     {
 	    Gate::check('app.dist.edit');
 	    $rawDist = Distribution::find($id);
+	    $rawItem = $rawDist->raw;
+	    
 	    
 	    $this->validate($request, [
 		    'unit_price' => 'required|numeric',
-		    'amount'   => 'required|numeric',
+		    'amount'   => 'required|numeric|max:'.$rawItem->amount,
 		    'buyer_name' => 'required|string|max:255',
 		    'buyer_address' => 'required',
 		    'buyer_phone' => 'required'
 	    ]);
-
-	    $rawItem = Raw::find($request->raw);
 
 	    $rawAmount = $rawItem->amount;
 	    $oldRawAmount = $rawDist->amount;
@@ -138,8 +139,11 @@ class RawDistributionController extends Controller
      * @param  \App\Models\Distribution  $distribution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Distribution $distribution)
+    public function destroy($id)
     {
-        //
+	    $distribution = Distribution::find($id);
+	    $distribution->delete();
+	    alert()->success('Deleted!');
+	    return back();
     }
 }
