@@ -40,10 +40,11 @@ class DistributionController extends Controller
     public function store(Request $request)
     {
 	    Gate::authorize('app.dist.create');
+	    $feedItem = Feed::find($request->feed);
 	    
 	    $this->validate($request, [
 	    	'unit_price' => 'required|numeric',
-		    'amount'   => 'required|numeric',
+		    'amount'   => 'required|numeric|max:'.$feedItem->amount,
 		    'buyer_name' => 'required|string|max:255',
 		    'buyer_address' => 'required',
 		    'buyer_phone' => 'required'
@@ -59,7 +60,6 @@ class DistributionController extends Controller
 	    ]);
 	    
 	    //update feed amount
-	    $feedItem = Feed::find($request->feed);
 	    $feedAmount = $feedItem->amount;
 	    $distributedAmount = $request->amount;
 	    $newFeedAmount = $feedAmount - $distributedAmount;
@@ -103,8 +103,16 @@ class DistributionController extends Controller
     {
 	    Gate::check('app.dist.edit');
 	
-	    $feedItem = Feed::find($request->feed);
-	    
+	    $feedItem = Feed::find($distribution->feed->id);
+	
+	    $this->validate($request, [
+		    'unit_price' => 'required|numeric',
+		    'amount'   => 'required|numeric|max:'.$feedItem->amount,
+		    'buyer_name' => 'required|string|max:255',
+		    'buyer_address' => 'required',
+		    'buyer_phone' => 'required'
+	    ]);
+
 	    $feedAmount = $feedItem->amount;
 	    $oldFeedAmount = $distribution->amount;
 	    $newFeedAmount = $request->amount;
@@ -116,7 +124,7 @@ class DistributionController extends Controller
 	    ]);
 	
 	    $distribution->update([
-		    'feed_id' => $request->feed,
+		    'feed_id' => $feedItem->id,
 		    'unit_price' => $request->unit_price,
 		    'amount' => $request->amount,
 		    'buyer_name' => $request->buyer_name,
@@ -137,6 +145,8 @@ class DistributionController extends Controller
      */
     public function destroy(Distribution $distribution)
     {
-        //
+        $distribution->delete();
+	    alert()->success('Deleted!');
+	    return back();
     }
 }

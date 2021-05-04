@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label class="form-control-label" for="feed">Item Name</label>
                                 <select class="form-control js-example-basic-single @error('feed') is-invalid @enderror" data-toggle="select" name="feed"
-                                        {{ !isset($distribution) ? 'required' : '' }}
+                                        {{ !isset($distribution) ? 'required' : 'disabled' }}
                                 >
                                     <option value="" selected disabled>--- Select Feed Item ---</option>
                                     @foreach($feeds as $feed)
