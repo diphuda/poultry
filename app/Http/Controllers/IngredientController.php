@@ -189,6 +189,7 @@ class IngredientController extends Controller
 		
 		$ingredient->delete();
 		alert()->success('Deleted!', 'The entry is deleted successfully');
+		
 		return back();
 	}
 }
