@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Distribution List')
+@section('title', 'Distribution History')
 
 @push('css')
     <!--Datatable CSS-->
@@ -19,11 +19,11 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">Distribution List</h3>
+                                <h3 class="mb-0">Feed Distribution History</h3>
                             </div>
                             <div class="col text-right">
                                 @if(Gate::check('app.dist.create'))
-                                    <a href="{{ route('distribution.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-box-2"></i> Create Distribution</a>
+                                    <a href="{{ route('distribution.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-box-2"></i> Sell Feed</a>
                                 @endif
                             </div>
                         </div>
@@ -45,49 +45,49 @@
                             </thead>
                             <tbody>
 
-                            @foreach($distributions as $key=>$distribution)
+                            @foreach($feedDist as $key=>$feed)
                                 <tr>
                                     <th>
                                         {{ $key+1 }}
                                     </th>
                                     <th>
-                                        {{ $distribution->feed->name }}
+                                        {{ $feed->feed->name }}
                                     </th>
                                     <td class="text-center">
-                                        {{ $distribution->buyer_name }}
+                                        {{ $feed->buyer_name }}
                                     </td>
                                     <td class="text-center">
 
-                                        {{ $distribution->amount }}
+                                        {{ $feed->amount }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $distribution->unit_price }}
+                                        {{ $feed->unit_price }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $distribution->amount * $distribution->unit_price }}
+                                        {{ $feed->amount * $feed->unit_price }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $distribution->created_at->format('d M Y') }}
+                                        {{ $feed->created_at->format('d M Y') }}
                                     </td>
                                     <td class="text-center">
                                         @if(Gate::check('app.dist.index'))
-                                            <a href="{{ route('distribution.show', [$distribution]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip" title="View Detail" style="margin-right: 0"></i></a>
+                                            <a href="{{ route('distribution.show', [$feed]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip" title="View Detail" style="margin-right: 0"></i></a>
                                         @endif
 
                                         @if(Gate::check('app.dist.edit'))
-                                            <a href="{{ route('distribution.edit', [$distribution]) }}" class="btn btn-sm btn-primary"><i
+                                            <a href="{{ route('distribution.edit', [$feed]) }}" class="btn btn-sm btn-primary"><i
                                                         class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
                                         @endif
 
                                         @if(Gate::check('app.dist.destroy'))
-                                            <form id="delete-form-{{ $distribution->id }}"
-                                                  action="{{ route('distribution.destroy', [$distribution]) }}"
+                                            <form id="delete-form-{{ $feed->id }}"
+                                                  action="{{ route('distribution.destroy', [$feed]) }}"
                                                   style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
                                                   title="Delete">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="button" class="btn btn-sm btn-danger"
-                                                        onclick="deleteData({{$distribution->id}})"><i class="fas fa-trash"></i>
+                                                        onclick="deleteData({{$feed->id}})"><i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         @endif
@@ -102,6 +102,94 @@
             </div>
         </div>
 
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Raw Distribution History</h3>
+                            </div>
+                            <div class="col text-right">
+                                @if(Gate::check('app.dist.create'))
+                                    <a href="{{ route('raw-sell.create') }}" class="btn btn-sm btn-primary"> <i class="ni ni-atom"></i> Sell Raw Item</a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive py-4">
+                        <!-- Projects table -->
+                        <table class="table table-flush table-hover" id="datatable-basic">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Item Name</th>
+                                <th scope="col" class="text-center">Buyer</th>
+                                <th scope="col" class="text-center">Quantity</th>
+                                <th scope="col" class="text-center">Unit Price(tk)</th>
+                                <th scope="col" class="text-center">Toal Price</th>
+                                <th scope="col" class="text-center">Date</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach($rawdist as $key=>$rawItem)
+                                <tr>
+                                    <th>
+                                        {{ $key+1 }}
+                                    </th>
+                                    <th>
+                                        {{ $rawItem->raw->name }}
+                                    </th>
+                                    <td class="text-center">
+                                        {{ $rawItem->buyer_name }}
+                                    </td>
+                                    <td class="text-center">
+
+                                        {{ $rawItem->amount }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rawItem->unit_price }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rawItem->amount * $rawItem->unit_price }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $rawItem->created_at->format('d M Y') }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if(Gate::check('app.dist.index'))
+                                            <a href="{{ route('raw-sell.show', [$rawItem]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip" title="View Detail" style="margin-right: 0"></i></a>
+                                        @endif
+
+                                        @if(Gate::check('app.dist.edit'))
+                                            <a href="{{ route('raw-sell.edit', [$rawItem]) }}" class="btn btn-sm btn-primary"><i
+                                                        class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
+                                        @endif
+
+                                        @if(Gate::check('app.dist.destroy'))
+                                            <form id="delete-form-{{ $rawItem->id }}"
+                                                  action="{{ route('raw-sell.destroy', [$rawItem]) }}"
+                                                  style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
+                                                  title="Delete">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="button" class="btn btn-sm btn-danger"
+                                                        onclick="deleteData({{$rawItem->id}})"><i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer -->
         @include('layouts.footers.auth')
@@ -127,6 +215,9 @@
     <script>
         $(document).ready(function () {
             $('#datatable-buttons').DataTable();
+        });
+        $(document).ready(function () {
+            $('#datatable-basic').DataTable();
         });
     </script>
 

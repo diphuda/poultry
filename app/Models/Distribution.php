@@ -14,4 +14,9 @@ class Distribution extends Model
 	{
 		return $this->belongsTo(Feed::class);
 	}
+	
+	public function raw()
+	{
+		return $this->belongsTo(Raw::class);
+	}
 }

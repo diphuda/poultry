@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Distribution;
 use App\Models\Feed;
 use App\Models\Ingredient;
 use App\Models\Raw;
@@ -16,6 +17,7 @@ class DashboardController extends Controller
 	    $ingredients = Ingredient::with('supplier', 'raw')->orderBy('created_at', 'DESC')->get();
 	    $item = Raw::all();
 	    $feeds = Feed::all();
-    	return view('admin.dashboard', compact('ingredients','item','feeds'));
+	    $distribution = Distribution::all();
+    	return view('admin.dashboard', compact('ingredients','item','feeds','distribution'));
     }
 }

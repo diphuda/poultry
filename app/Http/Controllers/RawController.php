@@ -77,14 +77,6 @@ class RawController extends Controller
         Alert::success('Item Updated', 'success');
         return redirect()->route('raw-item.index');
     }
-	
-	/**
-	 * Remove the specified resource from storage.
-	 */
-//	public function distribute(Request $request, $id)
-//	{
-//
-//	}
     
 
     /**

@@ -15,7 +15,8 @@ class CreateDistributionsTable extends Migration
     {
         Schema::create('distributions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('feed_id')->constrained('feeds');
+            $table->foreignId('feed_id')->nullable();
+            $table->foreignId('raw_id')->nullable();
             $table->decimal('unit_price');
             $table->decimal('amount');
             $table->string('buyer_name');
