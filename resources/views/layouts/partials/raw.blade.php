@@ -5,7 +5,6 @@
         <th scope="col" class="text-center">Item Code</th>
         <th scope="col" class="text-center">Amount Available (kg/ltr)</th>
         <th scope="col" class="text-center">Total Cost (BDT)</th>
-        <th scope="col" class="text-center">Avg. Price (BDT)</th>
         <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
@@ -17,20 +16,13 @@
                 {{ $item->name }}
             </th>
             <td class="text-center">
-                {{ $item->item_code ? $item->item_code : "Nothing Added"}}
+                {{ $item->item_code }}
             </td>
             <td class="text-center">
                 {{ $item->amount }}
             </td>
             <td class="text-center">
                 ৳ {{ $item->cost }}
-            </td>
-            <td class="text-center">
-                @if(($item->amount) == 0)
-                    0.00
-                @else
-                    ৳ {{ $item->cost / $item->amount }}
-                @endif
             </td>
             <td class="text-center">
                 @if(Gate::check('app.raw.edit'))

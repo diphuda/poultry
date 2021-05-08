@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8">
+            <div class="col-xl-6">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -50,7 +50,6 @@
                             <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col" class="text-center">Available(KG/LTR)</th>
-                                <th scope="col" class="text-center">Avg. Price</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,14 +61,6 @@
                                 <td class="text-center">
                                     {{ $item->amount }}
                                 </td>
-                                <td class="text-center">
-                                    @if(($item->amount) == 0)
-                                        0.00
-                                    @else
-                                        ৳ {{ $item->cost / $item->amount }}
-                                    @endif
-                                </td></tr>
-
                             @endforeach
                             </tbody>
                         </table>
@@ -77,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-4">
+            <div class="col-xl-6">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
