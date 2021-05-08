@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
 		    'updated_at' => now()
 	    ]);
 	    
+	    /*
 	    DB::table('users')->insert([
 		    'role_id' => '2',
 		    'name' => 'Supervisor',
@@ -44,5 +45,6 @@ class UsersTableSeeder extends Seeder
 		    'created_at' => now(),
 		    'updated_at' => now()
 	    ]);
+	    */
     }
 }

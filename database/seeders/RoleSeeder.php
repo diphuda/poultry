@@ -24,6 +24,7 @@ class RoleSeeder extends Seeder
             ]
         )->permissions()->sync($adminPermission->pluck('id'));
 
+        /*
         Role::updateOrCreate(
             [
                 'name'      => 'Supervisor',
@@ -38,6 +39,6 @@ class RoleSeeder extends Seeder
                 'slug'      => 'warehouse',
                 'deletable' => false
             ]
-        );
+        );*/
     }
 }

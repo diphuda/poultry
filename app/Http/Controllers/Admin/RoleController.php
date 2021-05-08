@@ -17,7 +17,7 @@ class RoleController extends Controller
     {
         // notify("Quick notification");
 	    Gate::authorize('app.roles.index');
-        $roles = Role::all();
+        $roles = Role::with('permissions')->get();
         return view('admin.roles.index', compact('roles'));
     }
 
@@ -25,7 +25,7 @@ class RoleController extends Controller
     public function create()
     {
 	    Gate::authorize('app.roles.create');
-        $modules = Module::all();
+        $modules = Module::with('permissions')->get();
 
         return view('admin.roles.form', compact('modules'));
     }
@@ -55,7 +55,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
 	    Gate::authorize('app.roles.edit');
-        $modules = Module::all();
+        $modules = Module::with('permissions')->get();
         return view('admin.roles.form', compact('modules', 'role'));
     }
 

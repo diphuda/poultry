@@ -107,19 +107,26 @@ class IngredientController extends Controller
 			'qc_report'   => $request->qc_report,
 		]);
 		
-		$currentRawItem = $ingredient->raw;
-		
-		$newAmount = $request->amount;
-		$newCost = $newAmount * $request->unit_price;
-
-		$finalAmount = ($currentAmount - $oldAmount) + $newAmount;
-		$finalCost = ($currentCost - $oldCost) + $newCost;
-
-		// updating the table
-		$currentRawItem->update([
-			'amount' => $finalAmount,
-			'cost' => $finalCost
-		]);
+		//check only approved entry can add data to raw table
+		if ($ingredient->is_approved) {
+			$currentRawItem = $ingredient->raw;
+			
+			$newAmount = $request->amount;
+			$newCost = $newAmount * $request->unit_price;
+			
+			$currentTotalAmount = $currentRawItem->total_amount;
+			
+			$finalAmount = ($currentAmount - $oldAmount) + $newAmount;
+			$finalCost = ($currentCost - $oldCost) + $newCost;
+			$newTotalAmount = $currentTotalAmount + $newAmount;
+			
+			// updating the table
+			$currentRawItem->update([
+				'amount' => $finalAmount,
+				'cost'   => $finalCost,
+				'total_amount' => $newTotalAmount
+			]);
+		}
 	
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
@@ -133,7 +140,7 @@ class IngredientController extends Controller
 	public function pending()
 	{
 		Gate::authorize('app.entry.approve');
-		$ingredients = Ingredient::whereIsApproved(0)->orderBy('created_at', 'DESC')->get();
+		$ingredients = Ingredient::with('raw', 'supplier')->whereIsApproved(0)->orderBy('created_at', 'DESC')->get();
 		return view('ingredient.pending', compact('ingredients'));
 	}
 	

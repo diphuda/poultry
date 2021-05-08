@@ -42,7 +42,7 @@
                                     <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="code">Address</label>
+                                    <label class="form-control-label" for="code">Phone</label>
                                     <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                                 </div>
                                 <button class="btn btn-icon btn-success float-right" type="submit">

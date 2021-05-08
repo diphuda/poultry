@@ -15,7 +15,7 @@ class RawController extends Controller
     public function index()
     {
         $item = Raw::all();
-        return view('raw.index', ['item' => $item]);
+        return view('raw.index', compact('item'));
     }
 
     /**
