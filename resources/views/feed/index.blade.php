@@ -33,8 +33,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Amount(KG)</th>
-                                <th scope="col" class="text-center">Cost(BDT)</th>
+                                <th scope="col" class="text-center">Amount</th>
+                                <th scope="col" class="text-center">Cost</th>
+                                <th scope="col" class="text-center">Avg. Cost</th>
                                 <th scope="col" class="text-center">Wastage</th>
                                 <th scope="col" class="text-center">Date</th>
                             </tr>
@@ -50,10 +51,15 @@
                                         {{ $feed->name }}
                                     </th>
                                     <td class="text-center">
-                                        {{ $feed->amount }}
+                                        {{ $feed->amount }} kg
                                     </td>
                                     <td class="text-center">
                                         ৳ {{ $feed->cost }}
+                                    </td>
+                                    <td class="text-center">
+                                        @if($feed->amount != 0)
+                                            ৳ {{ $feed->cost / $feed->amount }}
+                                        @endif
                                     </td>
                                     <td class="text-center">
                                         {{ $feed->wastage }}%
@@ -94,9 +100,9 @@
     <script src="{{ asset('assets/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#datatable-buttons').DataTable();
-        } );
+        });
     </script>
 
 
