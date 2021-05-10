@@ -23,7 +23,42 @@
         </div>
     </div>
     <div class="container-fluid mt--8">
-        <div class="row justify-content-md-center">
+        <div class="row">
+            <div class="col-md-4 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Raw Items Availability</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive py-4">
+                        <table class="table table-flush">
+                            <thead class="thead-light">
+                            <th>Name</th>
+                            <th>Available</th>
+                            <th>Avg. Cost</th>
+                            </thead>
+                            <tbody>
+                            @foreach($raws as $raw)
+                                <tr>
+                                    <th>{{$raw->name}}</th>
+                                    <td>
+                                        {{$raw->amount}} kg
+                                    </td>
+                                    <td>
+                                        @if($raw->total_purchased_amount != 0)
+                                            ৳ {{ number_format(($raw->cost / $raw->total_purchased_amount ), 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header border-0">

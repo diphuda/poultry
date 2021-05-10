@@ -16,7 +16,6 @@ class CreateIngredientsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('raw_id');
             $table->foreignId('supplier_id');
-            $table->string('unit');
             $table->decimal('unit_price',6, 2);
             $table->decimal('amount', 6, 2);
             $table->string('file')->nullable();
