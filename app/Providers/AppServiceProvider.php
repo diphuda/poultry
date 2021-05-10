@@ -28,7 +28,7 @@ class   AppServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-//		\Debugbar::disable();
+		\Debugbar::disable();
 //		Schema::defaultStringLength(191);
 		
 		View::share('pendingCount', Ingredient::whereIsApproved(0)->count());
