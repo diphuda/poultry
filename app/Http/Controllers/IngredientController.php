@@ -51,12 +51,13 @@ class IngredientController extends Controller
 			'file'        => $request->file,
 			'qc_report'   => $request->qc_report,
 		]);
-
+		
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
 		}
 		
 		alert()->success('Done!', 'Entry Added successfully');
+		
 		return redirect()->route('ingredient.index');
 	}
 	
@@ -64,6 +65,7 @@ class IngredientController extends Controller
 	public function show(Ingredient $ingredient)
 	{
 		Gate::authorize('app.entry.index');
+		
 		return view('ingredient.show', compact('ingredient'));
 	}
 	
@@ -107,14 +109,14 @@ class IngredientController extends Controller
 			'qc_report'   => $request->qc_report,
 		]);
 		
-		//check only approved entry can add data to raw table
+		//check only approved entry can add data to raws table
 		if ($ingredient->is_approved) {
 			$currentRawItem = $ingredient->raw;
 			
 			$newAmount = $request->amount;
 			$newCost = $newAmount * $request->unit_price;
 			
-			$currentTotalAmount = $currentRawItem->total_amount;
+			$currentTotalAmount = $currentRawItem->total_purchased_amount;
 			
 			$finalAmount = ($currentAmount - $oldAmount) + $newAmount;
 			$finalCost = ($currentCost - $oldCost) + $newCost;
@@ -122,17 +124,18 @@ class IngredientController extends Controller
 			
 			// updating the table
 			$currentRawItem->update([
-				'amount' => $finalAmount,
-				'cost'   => $finalCost,
-				'total_amount' => $newTotalAmount
+				'amount'                 => $finalAmount,
+				'cost'                   => $finalCost,
+				'total_purchased_amount' => $newTotalAmount
 			]);
 		}
-	
+		
 		if ($request->hasFile('file')) {
 			$ingredient->addMedia($request->file)->toMediaCollection('file');
 		}
 		
 		alert()->success('Done!', 'Entry Updated successfully');
+		
 		return redirect()->route('ingredient.index');
 	}
 	
@@ -141,6 +144,7 @@ class IngredientController extends Controller
 	{
 		Gate::authorize('app.entry.approve');
 		$ingredients = Ingredient::with('raw', 'supplier')->whereIsApproved(0)->orderBy('created_at', 'DESC')->get();
+		
 		return view('ingredient.pending', compact('ingredients'));
 	}
 	
@@ -149,11 +153,13 @@ class IngredientController extends Controller
 	{
 		Gate::authorize('app.entry.approve');
 		$currentRawItem = Raw::find($id->raw_id);
-		$currentRawAmount = $currentRawItem->amount; // getting the existing amount from the table
+		$currentRawAmount = $currentRawItem->amount; // getting the existing AVAILABLE amount from the table
+		$currentTotalAmount = $currentRawItem->total_purchased_amount; // getting the total purchased amount
 		
 		
 		$newRawAmount = $id->amount;
 		$amountToShow = $currentRawAmount + $newRawAmount; // total amount to be added to the table
+		$totalPurchased = $currentTotalAmount + $newRawAmount;
 		
 		$currentCost = $currentRawItem->cost; // getting the existing cost from the table
 		
@@ -164,8 +170,9 @@ class IngredientController extends Controller
 		// updating the table
 		if ($currentRawAmount) {
 			$currentRawItem->update([
-				'amount' => $amountToShow,
-				'cost'   => $costToShow
+				'amount'                 => $amountToShow,
+				'cost'                   => $costToShow,
+				'total_purchased_amount' => $totalPurchased
 			]);
 		}
 		if (!$id->is_approved) {
