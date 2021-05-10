@@ -3,8 +3,10 @@
     <tr>
         <th scope="col">Item Name</th>
         <th scope="col" class="text-center">Item Code</th>
-        <th scope="col" class="text-center">Amount Available (kg/ltr)</th>
-        <th scope="col" class="text-center">Total Cost (BDT)</th>
+        <th scope="col" class="text-center">Available</th>
+        <th scope="col" class="text-center">Total Purchased</th>
+        <th scope="col" class="text-center">Total Cost</th>
+        <th scope="col" class="text-center">Avg. Cost</th>
         <th scope="col" class="text-center">Actions</th>
     </tr>
     </thead>
@@ -19,10 +21,20 @@
                 {{ $item->item_code }}
             </td>
             <td class="text-center">
-                {{ $item->amount }}
+                {{ $item->amount }} kg
+            </td>
+            <td class="text-center">
+                {{ $item->total_purchased_amount }} kg
             </td>
             <td class="text-center">
                 ৳ {{ $item->cost }}
+            </td>
+            <td class="text-center">
+                @if($item->total_purchased_amount!=0)
+                    ৳ {{ number_format(($item->cost / $item->total_purchased_amount ), 2, '.', ',') }}
+                @else
+                    ৳ 0.00
+                @endif
             </td>
             <td class="text-center">
                 @if(Gate::check('app.raw.edit'))

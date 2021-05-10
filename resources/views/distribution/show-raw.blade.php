@@ -18,12 +18,12 @@
                             <div class="col">
                                 <h2 class="mb-0">Distribution ID: {{ $rawItem->id }}</h2>
                             </div>
-                            <div class="col text-right">
-                                @if(Gate::check('app.dist.edit'))
-                                    <a href="{{ route('raw-sell.edit', [$rawItem]) }}" class="btn btn-sm btn-primary"><i
-                                                class="far fa-edit"></i> Edit Entry</a>
-                                @endif
-                            </div>
+{{--                            <div class="col text-right">--}}
+{{--                                @if(Gate::check('app.dist.edit'))--}}
+{{--                                    <a href="{{ route('raw-sell.edit', [$rawItem]) }}" class="btn btn-sm btn-primary"><i--}}
+{{--                                                class="far fa-edit"></i> Edit Entry</a>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
                         </div>
                     </div>
 

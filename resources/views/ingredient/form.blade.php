@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="amount">Amount</label>
                                         <input type="text"
@@ -112,21 +112,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="unit">Unit</label>
-                                        <select class="form-control @error('unit') is-invalid @enderror" data-toggle="select" name="unit" required>
-                                            <option value="kg"{{ 'kg' == old('unit', '') ? 'selected' : '' }}>kg</option>
-                                            <option value="ltr"{{ 'ltr' == old('unit', '') ? 'selected' : '' }}>ltr</option>
-                                        </select>
-                                        @error('unit')
-                                        <div class="invalid-feedback" role="alert">
-                                            {{ $message }}
-                                        </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="unit_price">Unit Price (BDT)</label>
                                         <input type="text"

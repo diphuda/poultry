@@ -17,7 +17,8 @@ class CreateRawsTable extends Migration
             $table->id();
 	        $table->string('name')->unique();
 	        $table->string('item_code')->unique();
-	        $table->decimal('amount', 6, 2)->nullable()->default('0');
+	        $table->decimal('amount', 6, 2)->nullable()->default('0'); //available amount
+	        $table->decimal('total_purchased_amount', 6, 2)->nullable()->default('0'); // total purchased amount from the beginning
 	        $table->decimal('cost', 6, 2)->nullable()->default('0');
             $table->timestamps();
         });

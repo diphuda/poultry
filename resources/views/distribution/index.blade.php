@@ -74,10 +74,10 @@
                                             <a href="{{ route('distribution.show', [$feed]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip" title="View Detail" style="margin-right: 0"></i></a>
                                         @endif
 
-                                        @if(Gate::check('app.dist.edit'))
-                                            <a href="{{ route('distribution.edit', [$feed]) }}" class="btn btn-sm btn-primary"><i
-                                                        class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
-                                        @endif
+{{--                                        @if(Gate::check('app.dist.edit'))--}}
+{{--                                            <a href="{{ route('distribution.edit', [$feed]) }}" class="btn btn-sm btn-primary"><i--}}
+{{--                                                        class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>--}}
+{{--                                        @endif--}}
 
                                         @if(Gate::check('app.dist.destroy'))
                                             <form id="delete-form-{{ $feed->id }}"
@@ -163,10 +163,10 @@
                                             <a href="{{ route('raw-sell.show', [$rawItem]) }}" class="btn btn-sm btn-success"><i class="fas fa-eye" data-toggle="tooltip" title="View Detail" style="margin-right: 0"></i></a>
                                         @endif
 
-                                        @if(Gate::check('app.dist.edit'))
-                                            <a href="{{ route('raw-sell.edit', [$rawItem]) }}" class="btn btn-sm btn-primary"><i
-                                                        class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
-                                        @endif
+{{--                                        @if(Gate::check('app.dist.edit'))--}}
+{{--                                            <a href="{{ route('raw-sell.edit', [$rawItem]) }}" class="btn btn-sm btn-primary"><i--}}
+{{--                                                        class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>--}}
+{{--                                        @endif--}}
 
                                         @if(Gate::check('app.dist.destroy'))
                                             <form id="delete-form-{{ $rawItem->id }}"

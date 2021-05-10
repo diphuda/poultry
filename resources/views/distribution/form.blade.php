@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@push('css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.min.css" rel="stylesheet"/>
-
-@endpush
-
 @if(isset($distribution))
     @section('title', 'Edit Distribution Info')
 @else
@@ -23,8 +17,43 @@
         </div>
     </div>
     <div class="container-fluid mt--8">
-        <div class="row justify-content-md-center">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-4 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">Feed Availability</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive py-4">
+                        <table class="table table-flush">
+                            <thead class="thead-light">
+                            <th>Name</th>
+                            <th>Available</th>
+                            <th>Avg. Cost</th>
+                            </thead>
+                            <tbody>
+                            @foreach($feeds as $feed)
+                                <tr>
+                                    <th>{{$feed->name}}</th>
+                                    <td>
+                                        {{$feed->amount}} kg
+                                    </td>
+                                    <td>
+                                        @if($feed->amount != 0)
+                                            ৳ {{ number_format(($feed->cost / $feed->amount ), 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -48,7 +77,7 @@
 
                             <div class="form-group">
                                 <label class="form-control-label" for="feed">Item Name</label>
-                                <select class="form-control js-example-basic-single @error('feed') is-invalid @enderror" data-toggle="select" name="feed"
+                                <select class="form-control @error('feed') is-invalid @enderror" data-toggle="select" name="feed"
                                         {{ !isset($distribution) ? 'required' : 'disabled' }}
                                 >
                                     <option value="" selected disabled>--- Select Feed Item ---</option>
@@ -176,16 +205,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.min.js"></script>
-    <script>
-        // In your Javascript (external .js resource or <script> tag)
-        $(document).ready(function () {
-            $('.dropify').dropify();
-            $('.js-example-basic-single').select2();
-        });
-    </script>
-
-@endpush

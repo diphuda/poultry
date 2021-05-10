@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
@@ -49,18 +48,26 @@
                             <thead class="thead-light">
                             <tr>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Available(KG/LTR)</th>
+                                <th scope="col" class="text-center">Available</th>
+                                <th scope="col" class="text-center">Avg. Cost</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($item as $item)
                                 <tr>
-                                <th scope="row">
-                                    {{ $item->name }}
-                                </th>
-                                <td class="text-center">
-                                    {{ $item->amount }}
-                                </td>
+                                    <th scope="row">
+                                        {{ $item->name }}
+                                    </th>
+                                    <td class="text-center">
+                                        {{ $item->amount }} kg
+                                    </td>
+                                    <td class="text-center">
+                                        @if($item->total_purchased_amount!=0)
+                                            ৳ {{ number_format(($item->cost / $item->total_purchased_amount), 2, '.', ',') }}
+                                        @else
+                                            ৳ 0.00
+                                        @endif
+                                    </td>
                             @endforeach
                             </tbody>
                         </table>
@@ -91,12 +98,13 @@
                             <tbody>
                             @foreach($feeds as $key=>$feed)
                                 <tr>
-                                <th scope="row">
-                                    {{ $feed->name }}
-                                </th>
-                                <td class="text-center">
-                                    {{ $feed->amount }}
-                                </td></tr>
+                                    <th scope="row">
+                                        {{ $feed->name }}
+                                    </th>
+                                    <td class="text-center">
+                                        {{ $feed->amount }}
+                                    </td>
+                                </tr>
 
                             @endforeach
                             </tbody>
