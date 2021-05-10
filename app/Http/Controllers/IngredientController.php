@@ -34,7 +34,6 @@ class IngredientController extends Controller
 	{
 		Gate::authorize('app.entry.create');
 		$this->validate($request, [
-			'unit'       => 'required',
 			'unit_price' => 'required|numeric',
 			'amount'     => 'required|numeric',
 			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
@@ -45,7 +44,6 @@ class IngredientController extends Controller
 			'raw_id'      => $request->raw,
 			'supplier_id' => $request->supplier,
 			'user_id'     => auth()->user()->id,
-			'unit'        => $request->unit,
 			'unit_price'  => $request->unit_price,
 			'amount'      => $request->amount,
 			'file'        => $request->file,

@@ -80,8 +80,8 @@ class DistributionController extends Controller
     public function show(Distribution $distribution)
     {
         Gate::check('app.dist.index');
-//        return view('distribution.show', compact('distribution'));
-        return $distribution;
+        return view('distribution.show', compact('distribution'));
+//        return $distribution;
     }
 
     /**

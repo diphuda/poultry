@@ -58,7 +58,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($feed->amount != 0)
-                                            ৳ {{ $feed->cost / $feed->amount }}
+                                            ৳ {{ number_format(($feed->cost / $feed->amount), 2, '.', ',') }}
                                         @endif
                                     </td>
                                     <td class="text-center">

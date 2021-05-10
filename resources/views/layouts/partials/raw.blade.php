@@ -31,7 +31,7 @@
             </td>
             <td class="text-center">
                 @if($item->total_purchased_amount!=0)
-                    ৳ {{ $item->cost / $item->total_purchased_amount }}
+                    ৳ {{ number_format(($item->cost / $item->total_purchased_amount ), 2, '.', ',') }}
                 @else
                     ৳ 0.00
                 @endif
