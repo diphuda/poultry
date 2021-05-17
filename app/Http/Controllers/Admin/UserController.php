@@ -17,7 +17,7 @@ class UserController extends Controller
 	public function index()
 	{
 		Gate::authorize('app.users.index');
-		$users = User::all();
+		$users = User::with('role')->get();
 		
 		return view('admin.users.index', compact('users'));
 	}
