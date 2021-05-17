@@ -82,7 +82,6 @@ class IngredientController extends Controller
 	{
 		Gate::authorize('app.entry.edit');
 		$this->validate($request, [
-			'unit'       => 'required',
 			'unit_price' => 'required',
 			'amount'     => 'required',
 			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
