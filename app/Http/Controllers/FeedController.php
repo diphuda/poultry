@@ -27,7 +27,7 @@ class FeedController extends Controller
     public function create()
     {
 	    Gate::authorize('app.feed.create');
-	    $raws = Raw::all();
+	    $raws = Raw::all()->where('amount', '>', 0);
         return view('feed.form', compact('raws'));
     }
 
@@ -39,7 +39,7 @@ class FeedController extends Controller
     {
 	    Gate::authorize('app.feed.create');
 
-	    $raws = Raw::all();
+	    $raws = Raw::all()->where('amount', '>', 0);
 	    $wastage = $request->wastage;
 	
 	    $this->validate($request, [

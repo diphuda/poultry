@@ -15,3 +15,4 @@ yarn-error.log
 storage/logs/laravel.log
 /storage/logs/
 storage/logs/laravel-2021-05-04.log
+*.log
