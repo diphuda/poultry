@@ -33,7 +33,8 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Amount</th>
+                                <th scope="col" class="text-center">Total Prepared</th>
+                                <th scope="col" class="text-center">Available</th>
                                 <th scope="col" class="text-center">Cost</th>
                                 <th scope="col" class="text-center">Avg. Cost</th>
                                 <th scope="col" class="text-center">Wastage</th>
@@ -51,6 +52,9 @@
                                         {{ $feed->name }}
                                     </th>
                                     <td class="text-center">
+                                        {{ $feed->total_amount }} kg
+                                    </td>
+                                    <td class="text-center">
                                         {{ $feed->amount }} kg
                                     </td>
                                     <td class="text-center">
@@ -58,7 +62,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($feed->amount != 0)
-                                            ৳ {{ number_format(($feed->cost / $feed->amount), 2, '.', ',') }}
+                                            ৳ {{ number_format(($feed->cost / $feed->total_amount), 2, '.', ',') }}
                                         @endif
                                     </td>
                                     <td class="text-center">

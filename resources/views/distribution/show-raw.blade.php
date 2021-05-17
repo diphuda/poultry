@@ -41,7 +41,7 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Amount</th>
-                                    <td>{{ $rawItem->amount }}</td>
+                                    <td>{{ $rawItem->amount }} kg</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Total Cost</th>

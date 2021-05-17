@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @if(isset($distribution))
-    @section('title', 'Edit Distribution Info')
+    @section('title', 'Edit Sell Feed')
 @else
-    @section('title', 'Create Distribution')
+    @section('title', 'Sell Feed')
 @endif
 
 @section('content')
@@ -43,7 +43,7 @@
                                     </td>
                                     <td>
                                         @if($feed->amount != 0)
-                                            ৳ {{ number_format(($feed->cost / $feed->amount ), 2, '.', ',') }}
+                                            ৳ {{ number_format(($feed->cost / $feed->total_amount ), 2, '.', ',') }}
                                         @endif
                                     </td>
                                 </tr>
@@ -60,9 +60,9 @@
                             <div class="col">
 
                                 @if(isset($distribution))
-                                    <h3 class="mb-0">Edit Distribution</h3>
+                                    <h3 class="mb-0">Edit Sell Feed</h3>
                                 @else
-                                    <h3 class="mb-0">Create Distribution</h3>
+                                    <h3 class="mb-0">Sell Feed</h3>
                                 @endif
                             </div>
                         </div>
@@ -189,8 +189,8 @@
                                 </button>
                             @else
                                 <button class="btn btn-icon btn-success float-right" type="submit">
-                                    <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                    <span class="btn-inner--text">Create Distribution</span>
+                                    <span class="btn-inner--icon"><i class="ni ni-box-2"></i></span>
+                                    <span class="btn-inner--text">Sell Feed</span>
                                 </button>
                             @endisset
                         </form>

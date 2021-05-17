@@ -76,6 +76,7 @@ class FeedController extends Controller
 	    	'name' => $request->name,
 		    'wastage' => $request->wastage,
 		    'amount' => $totalFeedAmount,
+		    'total_amount' => $totalFeedAmount,
 		    'cost' => $totalFeedCost
 	    ]);
 	

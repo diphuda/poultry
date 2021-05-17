@@ -56,7 +56,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
-                                                        {{ $raw->amount }}
+                                                        {{ $raw->amount }} <span class="text-muted">kg</span>
                                                     </div>
                                                 </td>
                                                 <td>
