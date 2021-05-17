@@ -58,7 +58,7 @@ class FeedController extends Controller
 
 	    	$inputtedAmount = $request->all()[$raw->id.'-amount'];
 		    $newRawAmount = $raw->amount - $inputtedAmount;
-		    $avgRawCost = $raw->cost / $raw->amount;
+		    $avgRawCost = $raw->cost / $raw->total_purchased_amount;
 		    $amountWithWastage = $inputtedAmount - ($inputtedAmount* ($wastage / 100));
 		    $rawCost = $inputtedAmount * $avgRawCost;
 		    $finalCost = $rawCost + ($rawCost * (($wastage / 100)));
