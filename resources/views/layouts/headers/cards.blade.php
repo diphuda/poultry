@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <h3 class="mt-3 mb-0 text-muted">
-                                <span class="">{{ $feeds->sum('amount') }} kg</span>
+                                <span class="">{{ $feeds->sum('total_amount') }} kg</span>
                             </h3>
                         </div>
                     </div>

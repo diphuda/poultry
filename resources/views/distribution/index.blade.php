@@ -37,7 +37,7 @@
                                 <th scope="col">Item Name</th>
                                 <th scope="col" class="text-center">Buyer</th>
                                 <th scope="col" class="text-center">Quantity</th>
-                                <th scope="col" class="text-center">Unit Price(tk)</th>
+                                <th scope="col" class="text-center">Unit Price</th>
                                 <th scope="col" class="text-center">Toal Price</th>
                                 <th scope="col" class="text-center">Date</th>
                                 <th scope="col" class="text-center">Actions</th>
@@ -57,14 +57,13 @@
                                         {{ $feed->buyer_name }}
                                     </td>
                                     <td class="text-center">
-
-                                        {{ $feed->amount }}
+                                        {{ $feed->amount }} <span class="text-muted">kg</span>
                                     </td>
                                     <td class="text-center">
-                                        {{ $feed->unit_price }}
+                                        <span class="text-muted">৳</span> {{ $feed->unit_price }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $feed->amount * $feed->unit_price }}
+                                        <span class="text-muted">৳</span> {{ $feed->amount * $feed->unit_price }}
                                     </td>
                                     <td class="text-center">
                                         {{ $feed->created_at->format('d M Y') }}
@@ -147,13 +146,13 @@
                                     </td>
                                     <td class="text-center">
 
-                                        {{ $rawItem->amount }}
+                                        {{ $rawItem->amount }} <span class="text-muted">kg</span>
                                     </td>
                                     <td class="text-center">
-                                        {{ $rawItem->unit_price }}
+                                        <span class="text-muted">৳</span> {{ $rawItem->unit_price }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $rawItem->amount * $rawItem->unit_price }}
+                                        <span class="text-muted">৳</span> {{ $rawItem->amount * $rawItem->unit_price }}
                                     </td>
                                     <td class="text-center">
                                         {{ $rawItem->created_at->format('d M Y') }}
