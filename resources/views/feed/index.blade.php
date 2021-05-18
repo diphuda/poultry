@@ -39,6 +39,7 @@
                                 <th scope="col" class="text-center">Avg. Cost</th>
                                 <th scope="col" class="text-center">Wastage</th>
                                 <th scope="col" class="text-center">Date</th>
+                                <th scope="col" class="text-center">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -70,6 +71,21 @@
                                     </td>
                                     <td class="text-center">
                                         {{ $feed->created_at->format('d M Y') }}
+                                    </td>
+
+                                    <td class="text-center">
+                                        @if(Gate::check('app.feed.destroy'))
+                                            <form id="delete-form-{{ $feed->id }}"
+                                                  action="{{ route('feed.destroy', [$feed]) }}"
+                                                  style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
+                                                  title="Delete">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="button" class="btn btn-sm btn-danger"
+                                                        onclick="deleteData({{ $feed->id }})"><i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
