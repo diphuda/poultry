@@ -122,11 +122,14 @@ class FeedController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Feed  $feed
-     * @return \Illuminate\Http\Response
+
      */
     public function destroy(Feed $feed)
     {
-        //
+	    Gate::authorize('app.feed.destroy');
+
+	    $feed->delete();
+	    alert()->success('Deleted!', 'The item is deleted successfully');
+	    return back();
     }
 }

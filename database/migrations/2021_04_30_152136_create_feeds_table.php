@@ -17,9 +17,9 @@ class CreateFeedsTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('wastage')->nullable();
-            $table->decimal('amount');
-            $table->decimal('total_amount')->nullable();
-            $table->decimal('cost');
+            $table->decimal('amount', 15, 2);
+            $table->decimal('total_amount', 15, 2)->nullable();
+            $table->decimal('cost',15,2);
             $table->timestamps();
         });
     }

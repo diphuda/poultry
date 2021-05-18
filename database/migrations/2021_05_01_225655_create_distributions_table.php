@@ -18,8 +18,8 @@ class CreateDistributionsTable extends Migration
 
             $table->foreignId('feed_id')->nullable();
             $table->foreignId('raw_id')->nullable();
-            $table->decimal('unit_price');
-            $table->decimal('amount');
+            $table->decimal('unit_price', 15, 2);
+            $table->decimal('amount', 15, 2);
             $table->string('buyer_name');
             $table->text('buyer_address');
             $table->string('buyer_phone');

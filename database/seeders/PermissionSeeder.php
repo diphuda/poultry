@@ -160,11 +160,11 @@ class PermissionSeeder extends Seeder
 //		    'name' => 'Edit Vendor',
 //		    'slug' => 'app.feed.edit'
 //	    ]);
-//	    Permission::updateOrCreate([
-//		    'module_id' => $moduleAppUser->id,
-//		    'name' => 'Delete Vendor',
-//		    'slug' => 'app.feed.destroy'
-//	    ]);
+	    Permission::updateOrCreate([
+		    'module_id' => $moduleAppUser->id,
+		    'name' => 'Delete Feed',
+		    'slug' => 'app.feed.destroy'
+	    ]);
 	    
 	    //distribution management
 	    $moduleAppUser = Module::updateOrCreate(['name' => 'Distribution Permission']);
