@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Raw Entry Detail')
+@section('title', 'Feed Detail')
 
 @push('css')
 

@@ -44,7 +44,8 @@ class FeedController extends Controller
 	
 	    $this->validate($request, [
 	    	'name' => 'required|string',
-		    'wastage' => 'numeric|max:99'
+		    'wastage' => 'numeric|max:99',
+		    'flock' => 'required',
 	    ]);
 
 	    $totalFeedAmount = 0;
@@ -77,6 +78,8 @@ class FeedController extends Controller
 		    'wastage' => $request->wastage,
 		    'amount' => $totalFeedAmount,
 		    'total_amount' => $totalFeedAmount,
+		    'flock' => $request->flock,
+		    'project_name' => $request->project_name,
 		    'cost' => $totalFeedCost
 	    ]);
 	
