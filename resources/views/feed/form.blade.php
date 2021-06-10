@@ -39,6 +39,30 @@
                                     </div>
                                     @enderror
                                 </div>
+
+                                <div class="input-group mb-4 mt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-hashtag"></i></span>
+                                    </div>
+                                    <input class="form-control @error('flock') is-invalid @enderror" type="text" name="flock" placeholder="Flock Number" required value="{{ old('flock') }}">
+                                    @error('flock')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+
+                                <div class="input-group mb-4 mt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-tag"></i></span>
+                                    </div>
+                                    <input class="form-control @error('project_name') is-invalid @enderror" type="text" name="project_name" placeholder="Project Name" required value="{{ old('project_name') }}">
+                                    @error('project_name')
+                                    <div class="invalid-feedback" role="alert">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
                                 <div class="table-responsive-sm">
                                     <table class="table align-items-center table-hover table-flush table-bordered mb-2">
                                         <thead class="thead-light">
@@ -85,7 +109,7 @@
                                         <input class="form-control @error('wastage') is-invalid @enderror" type="text" name="wastage" placeholder="Wastage" value="{{ old('wastage') }}">
                                         @error('wastage')
                                         <div class="invalid-feedback" role="alert">
-                                            Wastage cannot be 100%
+                                            {{ $message }}
                                         </div>
                                         @enderror
                                     </div>

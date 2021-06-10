@@ -16,6 +16,8 @@ class CreateFeedsTable extends Migration
         Schema::create('feeds', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('flock');
+            $table->string('project_name')->nullable();
             $table->decimal('wastage')->nullable();
             $table->decimal('amount', 15, 2);
             $table->decimal('total_amount', 15, 2)->nullable();

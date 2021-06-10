@@ -33,7 +33,9 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col" class="text-center">Total Prepared</th>
+                                <th scope="col">Flock</th>
+                                <th scope="col">Project</th>
+                                <th scope="col" class="text-center">Total</th>
                                 <th scope="col" class="text-center">Available</th>
                                 <th scope="col" class="text-center">Cost</th>
                                 <th scope="col" class="text-center">Avg. Cost</th>
@@ -53,6 +55,12 @@
                                         {{ $feed->name }}
                                     </th>
                                     <td class="text-center">
+                                        {{ $feed->flock }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ $feed->project_name }}
+                                    </td>
+                                    <td class="text-center">
                                         {{ $feed->total_amount }} kg
                                     </td>
                                     <td class="text-center">
@@ -70,7 +78,7 @@
                                         {{ $feed->wastage }}%
                                     </td>
                                     <td class="text-center">
-                                        {{ $feed->created_at->format('d M Y') }}
+                                        <span class="font-weight-600">{{ $feed->created_at->format('d M Y') }}</span> <br>{{ $feed->created_at->format('h:i A') }}
                                     </td>
 
                                     <td class="text-center">

@@ -3,6 +3,7 @@
     <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
+        <th scope="col">Chalan</th>
         <th scope="col" class="text-center">Supplier</th>
         <th scope="col" class="text-center">Unit (kg/ltr)</th>
         <th scope="col" class="text-center">Unit Price(tk)</th>
@@ -21,6 +22,9 @@
             </th>
             <th>
                 {{ $ingredient->raw->name }}
+            </th>
+            <th>
+                {{ $ingredient->chalan    }}
             </th>
             <td class="text-center">
                 {{ $ingredient->supplier->name }}
@@ -57,18 +61,18 @@
                                 class="fas fa-edit" data-toggle="tooltip" data-placement="top" title="Edit" style="margin-right: 0"></i></a>
                 @endif
 
-                @if(Gate::check('app.entry.destroy'))
-                    <form id="delete-form-{{ $ingredient->id }}"
-                          action="{{ route('ingredient.destroy', [$ingredient]) }}"
-                          style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
-                          title="Delete">
-                        @method('DELETE')
-                        @csrf
-                        <button type="button" class="btn btn-sm btn-danger"
-                                onclick="deleteData({{$ingredient->id}})"><i class="fas fa-trash"></i>
-                        </button>
-                    </form>
-                @endif
+                    @if(Gate::check('app.entry.destroy'))
+                        <form id="delete-form-{{ $ingredient->id }}"
+                              action="{{ route('ingredient.destroy', [$ingredient]) }}"
+                              style="display: inline-block;" method="POST" data-toggle="tooltip" data-placement="top"
+                              title="Delete">
+                            @method('DELETE')
+                            @csrf
+                            <button type="button" class="btn btn-sm btn-danger"
+                                    onclick="deleteData({{$ingredient->id}})"><i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    @endif
             </td>
         </tr>
     @endforeach

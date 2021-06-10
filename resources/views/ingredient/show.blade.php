@@ -53,6 +53,14 @@
                                     <td>{{ $ingredient->raw->name }}</td>
                                 </tr>
                                 <tr>
+                                    <th scope="row">Chalan</th>
+                                    <td>{{ $ingredient->chalan }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Project Name</th>
+                                    <td>{{ $ingredient->project_name ?  $ingredient->project_name : "None"}}</td>
+                                </tr>
+                                <tr>
                                     <th scope="row">Unit Price</th>
                                     <td>৳ {{ $ingredient->unit_price }}</td>
                                 </tr>
