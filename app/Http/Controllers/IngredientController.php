@@ -36,18 +36,21 @@ class IngredientController extends Controller
 		$this->validate($request, [
 			'unit_price' => 'required|numeric',
 			'amount'     => 'required|numeric',
+			'chalan'     => 'required',
 			'file'       => 'nullable|mimes:pdf,jpg,png,jpeg',
 			'qc_report'  => 'string',
 		]);
 		
 		$ingredient = Ingredient::create([
-			'raw_id'      => $request->raw,
-			'supplier_id' => $request->supplier,
-			'user_id'     => auth()->user()->id,
-			'unit_price'  => $request->unit_price,
-			'amount'      => $request->amount,
-			'file'        => $request->file,
-			'qc_report'   => $request->qc_report,
+			'raw_id'       => $request->raw,
+			'supplier_id'  => $request->supplier,
+			'user_id'      => auth()->user()->id,
+			'unit_price'   => $request->unit_price,
+			'amount'       => $request->amount,
+			'chalan'       => $request->chalan,
+			'project_name' => $request->project_name,
+			'file'         => $request->file,
+			'qc_report'    => $request->qc_report,
 		]);
 		
 		if ($request->hasFile('file')) {
@@ -102,6 +105,8 @@ class IngredientController extends Controller
 			'unit'        => $request->unit,
 			'unit_price'  => $request->unit_price,
 			'amount'      => $request->amount,
+			'chalan'       => $request->chalan,
+			'project_name' => $request->project_name,
 			'file'        => $request->file,
 			'qc_report'   => $request->qc_report,
 		]);

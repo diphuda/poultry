@@ -130,6 +130,41 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="chalan">Chalan</label>
+                                        <input type="text"
+                                               class="form-control @error('chalan') is-invalid @enderror"
+                                               id="chalan"
+                                               name="chalan" {{ !isset($ingredient) ? 'required' : '' }}
+                                               value="{{ $ingredient->chalan ?? old('chalan') }}"
+                                        >
+                                        @error('chalan')
+                                        <div class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="project_name">Project Name</label>
+                                        <input type="text"
+                                               class="form-control @error('project_name') is-invalid @enderror"
+                                               id="project_name"
+                                               name="project_name" {{ !isset($ingredient) ? 'required' : '' }}
+                                               value="{{ $ingredient->project_name ?? old('project_name') }}"
+                                        >
+                                        @error('project_name')
+                                        <div class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="form-control-label" for="qc_report">QC Report</label>
                                 <input type="text"
