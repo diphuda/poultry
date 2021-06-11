@@ -29,7 +29,7 @@ class DistributionController extends Controller
 	public function create()
 	{
 		Gate::authorize('app.dist.create');
-		$feeds = Feed::all();
+		$feeds = Feed::orderBy('created_at', 'DESC')->get();
 		
 		return view('distribution.form', compact('feeds'));
 	}
