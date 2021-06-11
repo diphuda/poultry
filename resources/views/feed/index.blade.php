@@ -33,14 +33,14 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Flock</th>
-                                <th scope="col">Project</th>
+                                <th scope="col" class="text-center">Date</th>
+                                <th scope="col" class="text-center">Flock</th>
+                                <th scope="col" class="text-center">Project</th>
                                 <th scope="col" class="text-center">Total</th>
                                 <th scope="col" class="text-center">Available</th>
                                 <th scope="col" class="text-center">Cost</th>
                                 <th scope="col" class="text-center">Avg. Cost</th>
                                 <th scope="col" class="text-center">Wastage</th>
-                                <th scope="col" class="text-center">Date</th>
                                 <th scope="col" class="text-center">Actions</th>
                             </tr>
                             </thead>
@@ -54,6 +54,9 @@
                                     <th>
                                         {{ $feed->name }}
                                     </th>
+                                    <td class="text-center">
+                                        <span class="font-weight-600">{{ $feed->created_at->format('d M Y') }}</span> <br>{{ $feed->created_at->format('g:i A') }}
+                                    </td>
                                     <td class="text-center">
                                         {{ $feed->flock }}
                                     </td>
@@ -76,9 +79,6 @@
                                     </td>
                                     <td class="text-center">
                                         {{ $feed->wastage }}%
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="font-weight-600">{{ $feed->created_at->format('d M Y') }}</span> <br>{{ $feed->created_at->format('h:i A') }}
                                     </td>
 
                                     <td class="text-center">
