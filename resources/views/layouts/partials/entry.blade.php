@@ -4,6 +4,7 @@
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Chalan</th>
+        <th scope="col">Project</th>
         <th scope="col" class="text-center">Supplier</th>
         <th scope="col" class="text-center">Unit (kg/ltr)</th>
         <th scope="col" class="text-center">Unit Price(tk)</th>
@@ -24,7 +25,10 @@
                 {{ $ingredient->raw->name }}
             </th>
             <th>
-                {{ $ingredient->chalan    }}
+                {{ $ingredient->chalan}}
+            </th>
+            <th>
+                {{ $ingredient->project_name}}
             </th>
             <td class="text-center">
                 {{ $ingredient->supplier->name }}
