@@ -18,7 +18,7 @@
     </div>
     <div class="container-fluid mt--8">
         <div class="row">
-            <div class="col-md-4 mb-5 mb-xl-0">
+            <div class="col-md-5 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
@@ -31,17 +31,25 @@
                         <table class="table table-flush">
                             <thead class="thead-light">
                             <th>Name</th>
-                            <th>Available</th>
-                            <th>Avg. Cost</th>
+                            <th scope="col" class="text-center">Date</th>
+                            <th scope="col" class="text-center">Flock</th>
+                            <th scope="col" class="text-center">Available</th>
+                            <th scope="col" class="text-center">Avg. Cost</th>
                             </thead>
                             <tbody>
                             @foreach($feeds as $feed)
                                 <tr>
                                     <th>{{$feed->name}}</th>
-                                    <td>
+                                    <td class="text-center">
+                                        <span class="font-weight-600">{{ $feed->created_at->format('d M Y') }}</span> <br>{{ $feed->created_at->format('g:i A') }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{$feed->flock}}
+                                    </td>
+                                    <td class="text-center">
                                         {{$feed->amount}} kg
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @if($feed->amount != 0)
                                             ৳ {{ number_format(($feed->cost / $feed->total_amount ), 2, '.', ',') }}
                                         @endif
@@ -53,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 mb-5 mb-xl-0">
+            <div class="col-md-7 mb-5 mb-xl-0">
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
