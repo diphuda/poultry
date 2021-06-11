@@ -16,7 +16,7 @@ class FeedController extends Controller
      */
     public function index()
     {
-        $feeds = Feed::all();
+        $feeds = Feed::orderBy('created_at', 'DESC')->get();
         return view('feed.index', compact('feeds'));
     }
 
