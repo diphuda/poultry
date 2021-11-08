@@ -51,7 +51,7 @@
                                         {{ $key+1 }}
                                     </th>
                                     <th>
-                                        {{ $feed->feed->name }}
+                                        {{ $feed->feed->name ?? 'NONE' }}
                                     </th>
                                     <td class="text-center">
                                         {{ $feed->buyer_name }}
