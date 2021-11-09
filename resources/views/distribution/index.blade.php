@@ -139,7 +139,7 @@
                                         {{ $key+1 }}
                                     </th>
                                     <th>
-                                        {{ $rawItem->raw->name }}
+                                        {{ $rawItem->raw->name ?? 'NONE'}}
                                     </th>
                                     <td class="text-center">
                                         {{ $rawItem->buyer_name }}
